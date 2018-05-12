@@ -167,10 +167,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Decider.h" />
+    <ClInclude Include="Decision.hpp" />
     <ClInclude Include="DecisionManager.h" />
     <ClInclude Include="Execution.hpp" />
     <ClInclude Include="ExecutionManager.h" />
     <ClInclude Include="Executor.h" />
+    <ClInclude Include="Exploration.hpp" />
     <ClInclude Include="ExplorationManager.h" />
     <ClInclude Include="Explorer.h" />
     <ClInclude Include="Hero.h" />
