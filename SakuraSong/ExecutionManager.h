@@ -1,8 +1,10 @@
 #pragma once
 #include <list>
-#include "Executor.h"
+
 #include "ExplorationManager.h"
 using namespace std;
+
+class Executor;
 
 class ExecutionManager
 {

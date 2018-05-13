@@ -18,16 +18,7 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Explorer.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Decider.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Hero.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Executor.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DecisionManager.cpp">
@@ -37,6 +28,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ExecutionManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MapManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Executions.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -49,16 +46,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Explorer.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Decider.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Hero.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Executor.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="DecisionManager.h">
@@ -70,13 +58,19 @@
     <ClInclude Include="ExecutionManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Execution.hpp">
+    <ClInclude Include="MapManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Decision.hpp">
+    <ClInclude Include="Decisions.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Exploration.hpp">
+    <ClInclude Include="Executions.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Explorations.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Typedef.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

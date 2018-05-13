@@ -152,30 +152,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Decider.cpp" />
     <ClCompile Include="DecisionManager.cpp" />
     <ClCompile Include="ExecutionManager.cpp" />
-    <ClCompile Include="Executor.cpp" />
+    <ClCompile Include="Executions.cpp" />
     <ClCompile Include="ExplorationManager.cpp" />
-    <ClCompile Include="Explorer.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MapManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
     <None Include="..\todoList.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Decider.h" />
-    <ClInclude Include="Decision.hpp" />
+    <ClInclude Include="Decisions.h" />
     <ClInclude Include="DecisionManager.h" />
-    <ClInclude Include="Execution.hpp" />
     <ClInclude Include="ExecutionManager.h" />
-    <ClInclude Include="Executor.h" />
-    <ClInclude Include="Exploration.hpp" />
+    <ClInclude Include="Executions.h" />
+    <ClInclude Include="Explorations.h" />
     <ClInclude Include="ExplorationManager.h" />
-    <ClInclude Include="Explorer.h" />
     <ClInclude Include="Hero.h" />
+    <ClInclude Include="MapManager.h" />
+    <ClInclude Include="Typedef.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

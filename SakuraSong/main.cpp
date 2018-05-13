@@ -1,24 +1,30 @@
 #include <SFML/Graphics.hpp>
-#include "Decider.h"
+
 #include "DecisionManager.h"
 #include "ExplorationManager.h"
+#include "MapManager.h"
 #include "ExecutionManager.h"
 #include "Hero.h"
+#include "Typedef.h"
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1800, 1000), "SFML works!");
+	sf::RenderWindow window(sf::VideoMode(800, 800), "SFML works!");
 
 	Hero* myHero = new Hero();
 
+	MapManager *myMapManager = new MapManager();
 	ExplorationManager * myExpManager = new ExplorationManager();
 	ExecutionManager * myExeManager = new ExecutionManager();
 	DecisionManager * myDecManager = new DecisionManager(myExpManager);
+	//myExpManager->init();
+	{
+		myExpManager->setExeManager(myExeManager);
+		myExpManager->setDecManager(myDecManager);
+		myExpManager->setHero(myHero);
+		myExpManager->setMapManager(myMapManager);
 
-	myExpManager->setExeManager(myExeManager);
-	myExpManager->setDecManager(myDecManager);
-	myExpManager->setHero(myHero);
-
+	}
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -33,6 +39,7 @@ int main()
 			}
 		}
 		myExeManager->execute();
+		window.draw(*(myMapManager->getMapSprite()));
 		window.draw(*(myHero->getSprite()));
 		window.display();
 		window.clear();
