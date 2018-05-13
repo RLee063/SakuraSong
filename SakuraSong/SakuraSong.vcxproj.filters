@@ -36,6 +36,15 @@
     <ClCompile Include="Executions.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\todoList.md">
@@ -70,7 +79,16 @@
     <ClInclude Include="Explorations.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Typedef.h">
+    <ClInclude Include="Menu.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Includes.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

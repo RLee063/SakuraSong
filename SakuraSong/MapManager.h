@@ -1,6 +1,6 @@
 #pragma once
 #include "SFML\Graphics.hpp"
-#include "Typedef.h"
+#include "Includes.h"
 
 
 
@@ -13,6 +13,7 @@ public:
 	int** getMap();
 	sf::Sprite* getMapSprite();
 private:
+	
 	MAP _map[MAP_HEIGHT][MAP_WIDTH];
 	POSITION _heroPos;
 	sf::Sprite _map1Sprite;

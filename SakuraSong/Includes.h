@@ -1,4 +1,6 @@
 #pragma once
+#include "SFML\Graphics.hpp"
+
 #define MAP_HEIGHT 10
 #define MAP_WIDTH 10
 

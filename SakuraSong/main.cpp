@@ -5,33 +5,27 @@
 #include "MapManager.h"
 #include "ExecutionManager.h"
 #include "Hero.h"
-#include "Typedef.h"
+#include "MenuManager.h"
+#include "Includes.h"
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 800), "SFML works!");
-
-	Hero* myHero = new Hero();
-
-	MapManager *myMapManager = new MapManager();
 	ExplorationManager * myExpManager = new ExplorationManager();
-	ExecutionManager * myExeManager = new ExecutionManager();
-	DecisionManager * myDecManager = new DecisionManager(myExpManager);
 	//myExpManager->init();
-	{
-		myExpManager->setExeManager(myExeManager);
-		myExpManager->setDecManager(myDecManager);
-		myExpManager->setHero(myHero);
-		myExpManager->setMapManager(myMapManager);
+	MapManager * myMapManager = myExpManager->getMapManager();
+	DecisionManager * myDecManager = myExpManager->getDecManager();
+	ExecutionManager * myExeManager = myExpManager->getExeManager();
+	MenuManager * myMenuManager = myExpManager->getMenuManager();
+	Hero * myHero = myExpManager->getHero();
 
-	}
-	while (window.isOpen())
+	sf::RenderWindow* window = myExpManager->getWindow();
+	while (window->isOpen())
 	{
 		sf::Event event;
-		while (window.pollEvent(event))
+		while (window->pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
-				window.close();
+				window->close();
 
 			if (event.type == sf::Event::KeyPressed)
 			{
@@ -39,10 +33,15 @@ int main()
 			}
 		}
 		myExeManager->execute();
-		window.draw(*(myMapManager->getMapSprite()));
-		window.draw(*(myHero->getSprite()));
-		window.display();
-		window.clear();
+
+		window->draw(*(myMapManager->getMapSprite()));
+		window->draw(*(myHero->getSprite()));
+		window->draw(*(myMenuManager->getMainMenu()->getFramWorkS()));
+		for (auto i : myMenuManager->getMainMenu()->getButtonsSList()) {
+			window->draw(*i);
+		}
+		window->display();
+		window->clear();
 	}
 	return 0;
 }

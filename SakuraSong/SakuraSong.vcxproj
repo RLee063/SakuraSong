@@ -159,6 +159,9 @@
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapManager.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="MenuManager.cpp" />
+    <ClCompile Include="RenderManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
@@ -172,8 +175,11 @@
     <ClInclude Include="Explorations.h" />
     <ClInclude Include="ExplorationManager.h" />
     <ClInclude Include="Hero.h" />
+    <ClInclude Include="Includes.h" />
     <ClInclude Include="MapManager.h" />
-    <ClInclude Include="Typedef.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="MenuManager.h" />
+    <ClInclude Include="RenderManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

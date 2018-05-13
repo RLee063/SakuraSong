@@ -1,6 +1,6 @@
 #include "DecisionManager.h"
 #include "SFML\Graphics.hpp"
-#include "Typedef.h"
+#include "Includes.h"
 
 DecisionManager::DecisionManager(ExplorationManager * expM) 
 {

@@ -1,6 +1,6 @@
 #pragma once
 #define HERO_TEXTURE_NUMBER 4
-#include "Typedef.h"
+#include "Includes.h"
 #include <SFML\Graphics.hpp>
 class Hero
 {

@@ -3,7 +3,7 @@
 #include <SFML\Graphics.hpp>
 #include "Explorations.h"
 #include "ExecutionManager.h"
-#include "Typedef.h"
+#include "Includes.h"
 
 
 class ExplorationManager;

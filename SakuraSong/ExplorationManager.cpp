@@ -1,32 +1,30 @@
 #include "ExplorationManager.h"
-
+#include "DecisionManager.h"
 ExplorationManager::ExplorationManager()
 {
+	_currentExeManager = new ExecutionManager();
+	_currentDecManager = new DecisionManager(this);
+	_currentMapManager = new MapManager();
+	_currentMenuManager = new MenuManager();
+	_myWindow = new sf::RenderWindow(sf::VideoMode(800, 800), "SFML works!");
+	_currentHero = new Hero();
 }
 
 ExplorationManager::~ExplorationManager()
 {
 }
 
-void ExplorationManager::setDecManager(DecisionManager * decM) {
-	_currentDecManager = decM;
+MenuManager * ExplorationManager::getMenuManager()
+{
+	return _currentMenuManager;
 }
 
 DecisionManager * ExplorationManager::getDecManager() {
 	return _currentDecManager;
 }
 
-void ExplorationManager::setExeManager(ExecutionManager * exeM) {
-	_currentExeManager = exeM;
-}
-
 ExecutionManager * ExplorationManager::getExeManager() {
 	return _currentExeManager;
-}
-
-void ExplorationManager::setMapManager(MapManager * mapM)
-{
-	_currentMapManager = mapM;
 }
 
 MapManager * ExplorationManager::getMapManager()
@@ -34,8 +32,9 @@ MapManager * ExplorationManager::getMapManager()
 	return _currentMapManager;
 }
 
-void ExplorationManager::setHero(Hero * h) {
-	_currentHero = h;
+sf::RenderWindow * ExplorationManager::getWindow()
+{
+	return _myWindow;
 }
 
 Hero * ExplorationManager::getHero() {
