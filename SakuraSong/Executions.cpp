@@ -98,3 +98,38 @@ bool LeftMainMenu::execute()
 	_expManager->getMenuManager()->leftMainMenu();
 	return 0;
 }
+
+ButtonBoxMove::ButtonBoxMove(ExplorationManager * exp, DIRECTION dir)
+	:Execution(exp)
+{
+	_dir = dir;
+}
+
+bool ButtonBoxMove::execute()
+{
+	sf::Sprite * buttonBoxS = _expManager->getMenuManager()->getCurrentMenu()->getButtonBoxS();
+	Button *** buttonArr = _expManager->getMenuManager()->getCurrentMenu()->getButtonArr();
+	sf::Vector2i* buttonIndex = _expManager->getMenuManager()->getCurrentMenu()->getButtonIndex();
+	switch (_dir)
+	{
+	case UP:
+		buttonBoxS->setPosition(buttonArr[buttonIndex->x-1][buttonIndex->y]->getSprite()->getPosition());
+		buttonIndex->x -= 1;
+		break;
+	case DOWN:
+		buttonBoxS->setPosition(buttonArr[buttonIndex->x+1][buttonIndex->y]->getSprite()->getPosition());
+		buttonIndex->x += 1;
+		break;
+	case LEFT:
+		buttonBoxS->setPosition(buttonArr[buttonIndex->x][buttonIndex->y-1]->getSprite()->getPosition());
+		buttonIndex->y -= 1;
+		break;
+	case RIGHT:
+		buttonBoxS->setPosition(buttonArr[buttonIndex->x][buttonIndex->y+1]->getSprite()->getPosition());
+		buttonIndex->y += 1;
+		break;
+	default:
+		break;
+	}
+	return 0;
+}

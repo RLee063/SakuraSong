@@ -20,28 +20,32 @@ KeyDown::KeyDown(int code, ExplorationManager * expM):
 
 bool KeyDown::decide()
 {
+	DIRECTION dir = NODIRECTION;
+	switch (_code)
+	{
+	case sf::Keyboard::W:
+		dir = UP;
+		break;
+	case sf::Keyboard::S:
+		dir = DOWN;
+		break;
+	case sf::Keyboard::A:
+		dir = LEFT;
+		break;
+	case sf::Keyboard::D:
+		dir = RIGHT;
+		break;
+	}
+
 	if (_expManager->getMenuManager()->getCurrentMenu() == NULL) {
-		DIRECTION dir = NODIRECTION;
 		switch (_code)
 		{
-		case sf::Keyboard::W:
-			dir = UP;
-			break;
-		case sf::Keyboard::S:
-			dir = DOWN;
-			break;
-		case sf::Keyboard::A:
-			dir = LEFT;
-			break;
-		case sf::Keyboard::D:
-			dir = RIGHT;
-			break;
 		case sf::Keyboard::K:
 			_expManager->getExeManager()->add(new OpenMainMenu(_expManager));
 			return 0;
 			break;
 		default:
-			return 0;
+
 			break;
 		}
 		if (_expManager->getRoleManager()->getHero()->isMoving()) {
@@ -61,7 +65,16 @@ bool KeyDown::decide()
 		{
 		case sf::Keyboard::K:
 			_expManager->getExeManager()->add(new LeftMainMenu(_expManager));
+			return 0;
 			break;
+		default:
+
+			break;
+		}
+		if (dir != NODIRECTION) {
+			if (_expManager->isButtonBoxMoveable(dir)) {
+				_expManager->getExeManager()->add(new ButtonBoxMove(_expManager, dir));
+			}
 		}
 		return 0;
 	}

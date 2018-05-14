@@ -25,6 +25,7 @@ public:
 
 	sf::RenderWindow* getWindow();
 	bool isMoveable(DIRECTION direction);
+	bool isButtonBoxMoveable(DIRECTION direction);
 
 private:
 	sf::RenderWindow* _myWindow;

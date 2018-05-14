@@ -1,6 +1,7 @@
 #pragma once
 #include "Includes.h"
 #include <list>
+
 class Button {
 public:
 	sf::Sprite* getSprite();
@@ -22,17 +23,24 @@ public:
 	Menu();
 	~Menu();
 	virtual list<sf::Sprite*> getRenderList() = 0;
-private:
+	virtual sf::Vector2i * getButtonIndex();
+	virtual sf::Vector2i * getButtonNum();
+	virtual sf::Sprite* getButtonBoxS();
+	virtual Button*** getButtonArr();
+protected:
+	sf::Vector2i _buttonNum;
+	sf::Vector2i _buttonIndex;
+	Button *** _buttonsArr;
+	sf::Sprite _framework;
+	sf::Texture _frameworkT;
+	sf::Sprite _selectedBox;
+	sf::Texture _selectedBoxT;
 };
-#define MAINMENU_BUTTON_NUM_X 2
-#define MAINMENU_BUTTON_NUM_Y 2
+
 
 class MainMenu :public Menu{
 public:
 	MainMenu();
 	list<sf::Sprite*> getRenderList();
 private:
-	sf::Sprite _framework;
-	sf::Texture _frameworkT;
-	Button * _buttonsArr[MAINMENU_BUTTON_NUM_X][MAINMENU_BUTTON_NUM_Y];
 };

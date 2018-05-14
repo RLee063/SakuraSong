@@ -48,3 +48,11 @@ public:
 	LeftMainMenu(ExplorationManager* exp);
 	bool execute();
 };
+
+class ButtonBoxMove : public Execution {
+public:
+	ButtonBoxMove(ExplorationManager* exp, DIRECTION dir);
+	bool execute();
+private:
+	DIRECTION _dir;
+};

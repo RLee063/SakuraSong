@@ -72,3 +72,27 @@ bool ExplorationManager::isMoveable(DIRECTION direction)
 	return 1;
 }
 
+bool ExplorationManager::isButtonBoxMoveable(DIRECTION direction)
+{
+	sf::Vector2i* buttonIndex = _currentMenuManager->getCurrentMenu()->getButtonIndex();
+	sf::Vector2i* buttonNum = _currentMenuManager->getCurrentMenu()->getButtonNum();
+	switch (direction)
+	{
+	case UP:
+		if (buttonIndex->x - 1 < 0) return 0;
+		break;
+	case DOWN:
+		if (buttonIndex->x + 2 > buttonNum->y) return 0;
+		break;
+	case LEFT:
+		if (buttonIndex->y  - 1 < 0) return 0;
+		break;
+	case RIGHT:
+		if (buttonIndex->y + 2 > buttonNum->x) return 0;
+		break;
+	default:
+		break;
+	}
+	return 1;
+}
+
