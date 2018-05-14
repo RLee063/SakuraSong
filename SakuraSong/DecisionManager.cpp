@@ -32,13 +32,13 @@ void DecisionManager::keyDown(int code) {
 		return;
 		break;
 	}
-	if (_expManager->getHero()->isMoving()) {
+	if (_expManager->getRoleManager()->getHero()->isMoving()) {
 		return;
 	}
 	if (dir != NODIRECTION) {
 		if (_expManager->isMoveable(dir)) {
-			_expManager->getHero()->setMovingState(1);
-			_expManager->getExeManager()->add(new ChangeDirection(_expManager->getHero(), &dir));
+			_expManager->getRoleManager()->getHero()->setMovingState(1);
+			_expManager->getExeManager()->add(new ChangeDirection(_expManager->getRoleManager()->getHero(), &dir));
 			_expManager->getExeManager()->add(new HeroMove(_expManager));
 		}
 	}

@@ -153,15 +153,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DecisionManager.cpp" />
+    <ClCompile Include="Decisions.cpp" />
     <ClCompile Include="ExecutionManager.cpp" />
     <ClCompile Include="Executions.cpp" />
     <ClCompile Include="ExplorationManager.cpp" />
+    <ClCompile Include="Explorations.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuManager.cpp" />
     <ClCompile Include="RenderManager.cpp" />
+    <ClCompile Include="RoleManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
@@ -180,6 +183,7 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuManager.h" />
     <ClInclude Include="RenderManager.h" />
+    <ClInclude Include="RoleManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

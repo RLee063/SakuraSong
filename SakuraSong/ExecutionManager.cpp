@@ -11,7 +11,7 @@ ExecutionManager::~ExecutionManager()
 }
 
 void ExecutionManager::execute() {
-	for (list<Executor*>::iterator it = _executorList.begin(); it != _executorList.end();) {
+	for (list<Execution*>::iterator it = _executorList.begin(); it != _executorList.end();) {
 		if (!(*it)->execute()) {
 			delete *it;
 			_executorList.erase(it++);
@@ -22,6 +22,6 @@ void ExecutionManager::execute() {
 	}
 }
 
-void ExecutionManager::add(Executor * exe) {
+void ExecutionManager::add(Execution * exe) {
 	_executorList.push_back(exe);
 }

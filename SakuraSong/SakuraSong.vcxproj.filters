@@ -45,6 +45,15 @@
     <ClCompile Include="RenderManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="RoleManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Decisions.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Explorations.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\todoList.md">
@@ -89,6 +98,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="RenderManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RoleManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

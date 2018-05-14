@@ -2,7 +2,7 @@
 #include "ExecutionManager.h"
 #include "MapManager.h"
 #include "MenuManager.h"
-#include "Hero.h"
+#include "RoleManager.h"
 
 class DecisionManager;
 
@@ -17,15 +17,15 @@ public:
 	DecisionManager * getDecManager();
 	ExecutionManager * getExeManager();
 	MapManager * getMapManager();
+	RoleManager * getRoleManager();
 	sf::RenderWindow* getWindow();
-	Hero * getHero();
 	bool isMoveable(DIRECTION direction);
 
 private:
 	sf::RenderWindow* _myWindow;
-	Hero * _currentHero;
 	MenuManager * _currentMenuManager;
 	ExecutionManager * _currentExeManager;
 	DecisionManager * _currentDecManager;
 	MapManager * _currentMapManager;
+	RoleManager * _currentRoleManager;
 };

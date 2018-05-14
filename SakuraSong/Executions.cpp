@@ -27,7 +27,7 @@ bool HeroMove::execute()
 	if (_timeCount % 70 != 0) {
 		return 1;
 	}
-	Hero * hero = _expManager->getHero();
+	Hero * hero = _expManager->getRoleManager()->getHero();
 	DIRECTION* dir = hero->getDirection();
 	sf::Sprite * mS = hero->getSprite();
 	int **map = _expManager->getMapManager()->getMap();

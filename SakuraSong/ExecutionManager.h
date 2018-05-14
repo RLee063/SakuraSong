@@ -4,7 +4,7 @@
 #include "ExplorationManager.h"
 using namespace std;
 
-class Executor;
+class Execution;
 
 class ExecutionManager
 {
@@ -12,9 +12,9 @@ public:
 	ExecutionManager();
 	~ExecutionManager();
 	void execute();
-	void add(Executor* exe);
+	void add(Execution* exe);
 private:
-	list<Executor*> _executorList;
+	list<Execution*> _executorList;
 };
 
 

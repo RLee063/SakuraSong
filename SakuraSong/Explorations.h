@@ -1,10 +1,10 @@
 #pragma once
 #include <SFML\Graphics.hpp>
-class Explorer
+class Exploration
 {
 public:
-	Explorer();
-	~Explorer();
+	Exploration();
+	~Exploration();
 
 };
 

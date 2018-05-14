@@ -6,8 +6,9 @@ ExplorationManager::ExplorationManager()
 	_currentDecManager = new DecisionManager(this);
 	_currentMapManager = new MapManager();
 	_currentMenuManager = new MenuManager();
+	_currentRoleManager = new RoleManager(this);
 	_myWindow = new sf::RenderWindow(sf::VideoMode(800, 800), "SFML works!");
-	_currentHero = new Hero();
+
 }
 
 ExplorationManager::~ExplorationManager()
@@ -32,13 +33,14 @@ MapManager * ExplorationManager::getMapManager()
 	return _currentMapManager;
 }
 
+RoleManager * ExplorationManager::getRoleManager()
+{
+	return _currentRoleManager;
+}
+
 sf::RenderWindow * ExplorationManager::getWindow()
 {
 	return _myWindow;
-}
-
-Hero * ExplorationManager::getHero() {
-	return _currentHero;
 }
 
 bool ExplorationManager::isMoveable(DIRECTION direction)

@@ -8,15 +8,15 @@
 
 class ExplorationManager;
 
-class Executor
+class Execution
 {
 public:
-	Executor() {};
-	~Executor() {};
+	Execution() {};
+	~Execution() {};
 	virtual bool execute() = 0;
 };
 
-class HeroMove : public Executor {
+class HeroMove : public Execution {
 public:
 	HeroMove(ExplorationManager* exp);
 	bool execute();
@@ -26,7 +26,7 @@ private:
 	ExplorationManager * _expManager;
 };
 
-class ChangeDirection :public Executor {
+class ChangeDirection :public Execution {
 public:
 	ChangeDirection(Hero * hero, DIRECTION* dr);
 	bool execute();

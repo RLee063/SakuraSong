@@ -16,7 +16,7 @@ int main()
 	DecisionManager * myDecManager = myExpManager->getDecManager();
 	ExecutionManager * myExeManager = myExpManager->getExeManager();
 	MenuManager * myMenuManager = myExpManager->getMenuManager();
-	Hero * myHero = myExpManager->getHero();
+	Hero * myHero = myExpManager->getRoleManager()->getHero();
 
 	sf::RenderWindow* window = myExpManager->getWindow();
 	while (window->isOpen())

@@ -1,9 +1,9 @@
 #pragma once
-class Decider
+class Decision
 {
 public:
-	Decider();
-	~Decider();
-	void keyDown(int key);
+	Decision();
+	~Decision();
+	
 };
 
