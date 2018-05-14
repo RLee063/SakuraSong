@@ -5,6 +5,5 @@ class Exploration
 public:
 	Exploration();
 	~Exploration();
-
 };
 

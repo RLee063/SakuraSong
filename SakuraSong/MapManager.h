@@ -1,7 +1,8 @@
 #pragma once
 #include "SFML\Graphics.hpp"
 #include "Includes.h"
-
+#include <list>
+using namespace std;
 
 
 class MapManager

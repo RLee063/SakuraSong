@@ -11,26 +11,40 @@ class ExplorationManager;
 class Execution
 {
 public:
-	Execution() {};
+	Execution(ExplorationManager* expM);
 	~Execution() {};
 	virtual bool execute() = 0;
+protected:
+	ExplorationManager * _expManager;
 };
 
 class HeroMove : public Execution {
 public:
-	HeroMove(ExplorationManager* exp);
+	HeroMove(ExplorationManager* expM);
 	bool execute();
 private:
 	int _tIndex;
 	int _timeCount;
-	ExplorationManager * _expManager;
 };
 
 class ChangeDirection :public Execution {
 public:
-	ChangeDirection(Hero * hero, DIRECTION* dr);
+	ChangeDirection(DIRECTION *dir, ExplorationManager* expM);
 	bool execute();
 private:
 	DIRECTION _dr;
 	Hero * _hero;
+};
+
+class OpenMainMenu : public Execution {
+public:
+	OpenMainMenu(ExplorationManager* exp);
+	bool execute();
+private:
+};
+
+class LeftMainMenu :public Execution {
+public:
+	LeftMainMenu(ExplorationManager* exp);
+	bool execute();
 };

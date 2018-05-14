@@ -8,11 +8,16 @@ ExplorationManager::ExplorationManager()
 	_currentMenuManager = new MenuManager();
 	_currentRoleManager = new RoleManager(this);
 	_myWindow = new sf::RenderWindow(sf::VideoMode(800, 800), "SFML works!");
-
+	_currentRenderManager = new RenderManager(this);
 }
 
 ExplorationManager::~ExplorationManager()
 {
+}
+
+RenderManager * ExplorationManager::getRenderManager()
+{
+	return _currentRenderManager;
 }
 
 MenuManager * ExplorationManager::getMenuManager()

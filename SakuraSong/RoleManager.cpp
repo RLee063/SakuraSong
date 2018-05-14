@@ -16,3 +16,10 @@ Hero * RoleManager::getHero()
 {
 	return _hero;
 }
+
+list<sf::Sprite*> RoleManager::getRenderList()
+{
+	list<sf::Sprite*> sList;
+	sList.push_back(_hero->getSprite());
+	return sList;
+}

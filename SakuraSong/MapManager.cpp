@@ -12,6 +12,7 @@ MapManager::MapManager()
 
 MapManager::~MapManager()
 {
+
 }
 
 POSITION* MapManager::getHeroPos() {

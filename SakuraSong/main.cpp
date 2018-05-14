@@ -1,5 +1,4 @@
 #include <SFML/Graphics.hpp>
-
 #include "DecisionManager.h"
 #include "ExplorationManager.h"
 #include "MapManager.h"
@@ -10,15 +9,16 @@
 
 int main()
 {
-	ExplorationManager * myExpManager = new ExplorationManager();
-	//myExpManager->init();
+	ExplorationManager * myExpManager;
+	myExpManager = new ExplorationManager();
 	MapManager * myMapManager = myExpManager->getMapManager();
 	DecisionManager * myDecManager = myExpManager->getDecManager();
 	ExecutionManager * myExeManager = myExpManager->getExeManager();
 	MenuManager * myMenuManager = myExpManager->getMenuManager();
+	RenderManager * myRenderManager = myExpManager->getRenderManager();
 	Hero * myHero = myExpManager->getRoleManager()->getHero();
-
 	sf::RenderWindow* window = myExpManager->getWindow();
+
 	while (window->isOpen())
 	{
 		sf::Event event;
@@ -29,17 +29,12 @@ int main()
 
 			if (event.type == sf::Event::KeyPressed)
 			{
-				myDecManager->keyDown(event.key.code);
+				myDecManager->add(new KeyDown(event.key.code, myExpManager));
 			}
 		}
+		myDecManager->decide();
 		myExeManager->execute();
-
-		window->draw(*(myMapManager->getMapSprite()));
-		window->draw(*(myHero->getSprite()));
-		window->draw(*(myMenuManager->getMainMenu()->getFramWorkS()));
-		for (auto i : myMenuManager->getMainMenu()->getButtonsSList()) {
-			window->draw(*i);
-		}
+		myRenderManager->rendering();
 		window->display();
 		window->clear();
 	}

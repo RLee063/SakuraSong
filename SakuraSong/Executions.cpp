@@ -2,10 +2,11 @@
 #include "ExplorationManager.h"
 #define WALK_LENGTH 80
 
-ChangeDirection::ChangeDirection(Hero * hero, DIRECTION * dr)
+ChangeDirection::ChangeDirection(DIRECTION *dir,ExplorationManager* expM)
+	:Execution(expM)
 {
-	_hero = hero;
-	_dr = *dr;
+	_hero = expM->getRoleManager()->getHero();
+	_dr = *dir;
 }
 
 bool ChangeDirection::execute()
@@ -14,11 +15,11 @@ bool ChangeDirection::execute()
 	return 0;
 }
 
-HeroMove::HeroMove(ExplorationManager * exp)
+HeroMove::HeroMove(ExplorationManager * exp):
+Execution(exp)
 {
 	_timeCount = 0;
 	_tIndex = 0;
-	_expManager = exp;
 }
 
 bool HeroMove::execute()
@@ -70,4 +71,30 @@ bool HeroMove::execute()
 		hero->setMovingState(0);
 		return 0;
 	}
+}
+
+OpenMainMenu::OpenMainMenu(ExplorationManager * expM):
+Execution(expM)
+{}
+
+bool OpenMainMenu::execute()
+{
+	_expManager->getMenuManager()->switchToMainMenu();
+	return 0;
+}
+
+Execution::Execution(ExplorationManager* expM)
+{
+	_expManager = expM;
+}
+
+LeftMainMenu::LeftMainMenu(ExplorationManager * exp):
+	Execution(exp)
+{
+}
+
+bool LeftMainMenu::execute()
+{
+	_expManager->getMenuManager()->leftMainMenu();
+	return 0;
 }

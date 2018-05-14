@@ -14,7 +14,7 @@ public:
 	void execute();
 	void add(Execution* exe);
 private:
-	list<Execution*> _executorList;
+	list<Execution*> _executionsList;
 };
 
 

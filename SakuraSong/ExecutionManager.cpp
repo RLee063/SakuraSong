@@ -8,13 +8,14 @@ ExecutionManager::ExecutionManager()
 
 ExecutionManager::~ExecutionManager()
 {
+
 }
 
 void ExecutionManager::execute() {
-	for (list<Execution*>::iterator it = _executorList.begin(); it != _executorList.end();) {
+	for (list<Execution*>::iterator it = _executionsList.begin(); it != _executionsList.end();) {
 		if (!(*it)->execute()) {
 			delete *it;
-			_executorList.erase(it++);
+			_executionsList.erase(it++);
 		}
 		else {
 			it++;
@@ -23,5 +24,5 @@ void ExecutionManager::execute() {
 }
 
 void ExecutionManager::add(Execution * exe) {
-	_executorList.push_back(exe);
+	_executionsList.push_back(exe);
 }
