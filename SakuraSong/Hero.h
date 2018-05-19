@@ -15,6 +15,7 @@ public:
 	void startMove(DIRECTION * direction);
 	void setMovingState(bool isM);
 	void update();
+	void handleInput();
 
 private:
 	const static int heroTextureNumber = 4;

@@ -3,7 +3,10 @@
 #include "Hero.h"
 #include "Locator.h"
 #include "MapManager.h"
+#include "MenuManager.h"
+#include "Control.h"
 using namespace std;
+#define ANIMATION_DELAY 70
 
 Hero::Hero()
 {
@@ -50,9 +53,6 @@ bool Hero::isMoving()
 
 bool Hero::isMoveable(DIRECTION * direction)
 {
-	if (_isMoving == 1) {
-		return 0;
-	}
 	sf::Vector2i* heroPos = Locator::getMapManager()->getHeroPos();
 	int ** map = Locator::getMapManager()->getMap();
 	switch (*direction)
@@ -77,11 +77,13 @@ bool Hero::isMoveable(DIRECTION * direction)
 
 void Hero::startMove(DIRECTION * dir)
 {
+	if (isMoving()) {
+		return;
+	}
+	_mySprite.setTexture(_myTexture[*dir][_textureIndex]);
 	if (isMoveable(dir)) {
 		_isMoving = true;
 		setDirection(dir);
-//		Locator::getAnimationManager()->add(new heroMoveAnimation());
-		_mySprite.setTexture(_myTexture[*dir][_textureIndex]);
 		sf::Vector2i *posInMap = Locator::getMapManager()->getHeroPos();
 		switch (*dir)
 		{
@@ -110,9 +112,10 @@ void Hero::setMovingState(bool isM)
 
 void Hero::update()
 {
+	handleInput();
 	if (_isMoving) {
 		_animationCount++;
-		if (_animationCount % 100 == 0) {
+		if (_animationCount % ANIMATION_DELAY == 0) {
 			//Graphic
 			_mySprite.setTexture(_myTexture[_direction][_textureIndex]);
 			_textureIndex++;
@@ -142,4 +145,27 @@ void Hero::update()
 		}
 	}
 	Locator::getWindow()->draw(_mySprite);
+}
+
+void Hero::handleInput()
+{
+	if (Locator::getMenuManager()->getCurrentMenu() == NULL) {
+		DIRECTION dir = NODIRECTION;
+		Control * control = Locator::getControl();
+		if (control->ifPressedKey(sf::Keyboard::W) ){
+			dir = UP;
+		}
+		if (control->ifPressedKey(sf::Keyboard::S)) {
+			dir = DOWN;
+		}
+		if (control->ifPressedKey(sf::Keyboard::A)) {
+			dir = LEFT;
+		}
+		if (control->ifPressedKey(sf::Keyboard::D)) {
+			dir = RIGHT;
+		}
+		if (dir != NODIRECTION) {
+			startMove(&dir);
+		}
+	}
 }

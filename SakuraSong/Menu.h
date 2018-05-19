@@ -25,11 +25,13 @@ class Menu : public GameObject
 public:
 	Menu();
 	~Menu();
-	virtual sf::Vector2i * getButtonIndex();
-	virtual sf::Vector2i * getButtonNum();
-	virtual sf::Sprite* getButtonBoxS();
-	virtual Button*** getButtonArr();
+	sf::Vector2i * getButtonIndex();
+	sf::Vector2i * getButtonNum();
+	sf::Sprite* getButtonBoxS();
+	Button*** getButtonArr();
 	virtual void update();
+	virtual void moveButton(DIRECTION dir);
+	virtual bool isButtomMoveable(DIRECTION dir);
 protected:
 	sf::Vector2i _buttonNum;
 	sf::Vector2i _buttonIndex;
@@ -45,4 +47,6 @@ class MainMenu :public Menu{
 public:
 	MainMenu();
 private:
+	void update();
+	void handleInput();
 };

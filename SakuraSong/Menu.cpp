@@ -1,5 +1,7 @@
 #include "Menu.h"
 #include <SFML\Graphics.hpp>
+#include "MenuManager.h"
+#include "Control.h"
 Menu::Menu()
 {
 }
@@ -26,8 +28,11 @@ Button *** Menu::getButtonArr()
 }
 void Menu::update()
 {
+	//graphic
+	if (!_isVisible) {
+		return;
+	}
 	sf::RenderWindow * window = Locator::getWindow();
-
 	window->draw(_framework);
 	for (int i = 0; i < _buttonNum.x; i++) {
 		for (int j = 0; j < _buttonNum.y; j++) {
@@ -36,6 +41,52 @@ void Menu::update()
 	}
 	window->draw(_selectedBox);
 }
+void Menu::moveButton(DIRECTION dir)
+{
+	if (isButtomMoveable(dir)) {
+		switch (dir)
+		{
+		case UP:
+			_buttonIndex.x -= 1;
+			break;
+		case DOWN:
+			_buttonIndex.x += 1;
+			break;
+		case LEFT:
+			_buttonIndex.y -= 1;
+			break;
+		case RIGHT:
+			_buttonIndex.y += 1;
+			break;
+		default:
+			break;
+		}
+		_selectedBox.setPosition(_buttonsArr[_buttonIndex.x][_buttonIndex.y]->getSprite()->getPosition());
+	}
+}
+
+bool Menu::isButtomMoveable(DIRECTION dir)
+{
+	switch (dir)
+	{
+	case UP:
+		if (_buttonIndex.x - 1 < 0) return 0;
+		break;
+	case DOWN:
+		if (_buttonIndex.x + 1 >= _buttonNum.x) return 0;
+		break;
+	case LEFT:
+		if (_buttonIndex.y - 1 < 0) return 0;
+		break;
+	case RIGHT:
+		if (_buttonIndex.y + 1 >= _buttonNum.y) return 0;
+		break;
+	default:
+		break;
+	}
+	return 1;
+}
+
 #define MAIN_MENU_POSITION_X 0
 #define MAIN_MENU_POSITION_Y 500
 #define MAIN_MENU_HEIGHT 300
@@ -70,7 +121,44 @@ MainMenu::MainMenu()
 	_buttonIndex.y = 0;
 }
 
+void MainMenu::update()
+{
+	handleInput();
+	//graphic
+	Menu::update();
+}
 
+void MainMenu::handleInput()
+{
+	if (Locator::getMenuManager()->getCurrentMenu() != NULL) {
+		if (Locator::getMenuManager()->getCurrentMenu() == this) {
+			DIRECTION dir = NODIRECTION;
+			if (Locator::getControl()->ifPressedKey(sf::Keyboard::W)) {
+				dir = UP;
+			}
+			if (Locator::getControl()->ifPressedKey(sf::Keyboard::S)) {
+				dir = DOWN;
+			}
+			if (Locator::getControl()->ifPressedKey(sf::Keyboard::A)) {
+				dir = LEFT;
+			}
+			if (Locator::getControl()->ifPressedKey(sf::Keyboard::D)) {
+				dir = RIGHT;
+			}
+			if (dir != NODIRECTION) {
+				moveButton(dir);
+			}
+			if (Locator::getControl()->ifPressedKey(sf::Keyboard::K)) {
+				Locator::getMenuManager()->leftMenu();
+			}
+		}
+	}
+	else {
+		if(Locator::getControl()->ifPressedKey(sf::Keyboard::K)){
+			Locator::getMenuManager()->add(this);
+		}
+	}
+}
 
 MainMenuButton::MainMenuButton(int i_x, int i_y)
 {

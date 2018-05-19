@@ -19,5 +19,6 @@ private:
 	MapManager * _currentMapManager;
 	RoleManager * _currentRoleManager;
 	RenderManager * _currentRenderManager;
+	Control * _currentControl;
 };
 

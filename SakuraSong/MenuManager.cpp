@@ -7,7 +7,6 @@ MenuManager::MenuManager()
 	_currentMenu = NULL;
 }
 
-
 MenuManager::~MenuManager()
 {
 }
@@ -22,22 +21,32 @@ Menu * MenuManager::getCurrentMenu()
 	return _currentMenu;
 }
 
-void MenuManager::switchToMainMenu()
+void MenuManager::leftMenu()
 {
-	_currentMenu = _mainMenu;
-	_menuList.push_back(_mainMenu);
-}
-
-void MenuManager::leftMainMenu()
-{
-	_currentMenu = NULL;
+	_currentMenu->invisible();
 	_menuList.pop_back();
+	if (_menuList.empty()) {
+		_currentMenu = NULL;
+	}
+	else {
+		_currentMenu = _menuList.back();
+		_currentMenu->visible();
+	}
 }
 
 void MenuManager::update()
 {
-	list<sf::Sprite*> sList;
-	for (auto i : _menuList) {
-		i->update();
+	if (_currentMenu == NULL) {
+		_mainMenu->update();
 	}
+	else {
+		_currentMenu->update();
+	}
+}
+
+void MenuManager::add(Menu * menu)
+{
+	_menuList.push_back(menu);
+	_currentMenu = menu;
+	menu->visible();
 }

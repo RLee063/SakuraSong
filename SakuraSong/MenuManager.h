@@ -11,9 +11,9 @@ public:
 	~MenuManager();
 	Menu * getMainMenu();
 	Menu * getCurrentMenu();
-	void switchToMainMenu();
-	void leftMainMenu();
 	void update();
+	void add(Menu * menu);
+	void leftMenu();
 private:
 	Menu * _mainMenu;
 	Menu * _currentMenu;

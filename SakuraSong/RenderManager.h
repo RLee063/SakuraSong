@@ -13,4 +13,3 @@ public:
 private:
 	list<sf::Sprite*> _renderList;
 };
-

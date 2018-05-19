@@ -1,6 +1,7 @@
 #include "World.h"
 #include "Locator.h"
 #include <SFML\Graphics.hpp>
+#include "Control.h"
 
 World::World()
 {
@@ -8,8 +9,9 @@ World::World()
 	_currentMenuManager = new MenuManager();
 	_currentRoleManager = new RoleManager();
 	_currentRenderManager = new RenderManager();
+	_currentControl = new Control();
 	_currentWindow = new sf::RenderWindow(sf::VideoMode(MAP_HEIGHT_PIX, MAP_WIDTH_PIX), "SFML works!");
-	Locator::init(_currentMapManager, _currentMenuManager, _currentRoleManager, _currentRenderManager, _currentWindow);
+	Locator::init(_currentMapManager, _currentMenuManager, _currentRoleManager, _currentRenderManager, _currentWindow, _currentControl);
 }
 
 World::~World()
@@ -21,17 +23,17 @@ void World::worldLoop()
 	sf::RenderWindow *window = Locator::getWindow();
 	while (window->isOpen())
 	{
-		sf::Event event;
-		while (window->pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				window->close();
+		//sf::Event event;
+		//while (window->pollEvent(event))
+		//{
+		//	if (event.type == sf::Event::Closed)
+		//		window->close();
 
-			if (event.type == sf::Event::KeyPressed)
-			{
-				handleInput(event.key.code);
-			}
-		}
+		//	if (event.type == sf::Event::KeyPressed)
+		//	{
+		//		handleInput(event.key.code);
+		//	}
+		//}
 		update();
 		window->display();
 		window->clear();
@@ -73,7 +75,7 @@ void World::handleInput(int code)
 		return ;
 	}
 	else {
-		switch (code)
+		//switch (code)
 		//{
 	/*	case sf::Keyboard::K:
 			_expManager->getExeManager()->add(new LeftMainMenu(_expManager));
@@ -94,7 +96,8 @@ void World::handleInput(int code)
 
 void World::update()
 {
+	_currentControl->update();
 	_currentMapManager->update();
-	_currentMenuManager->update();
 	_currentRoleManager->update();
+	_currentMenuManager->update();
 }
