@@ -1,8 +1,7 @@
 #pragma once
 #include "Includes.h"
+#include "Menu.h"
 #include "list"
-
-class Menu;
 using namespace std;
 class MenuManager
 {
@@ -13,7 +12,7 @@ public:
 	Menu * getCurrentMenu();
 	void switchToMainMenu();
 	void leftMainMenu();
-	void update();
+	list<sf::Sprite*> getRenderList();
 private:
 	Menu * _mainMenu;
 	Menu * _currentMenu;

@@ -21,7 +21,19 @@
     <ClCompile Include="Hero.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="DecisionManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ExplorationManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ExecutionManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
     <ClCompile Include="MapManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Executions.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Menu.cpp">
@@ -36,13 +48,10 @@
     <ClCompile Include="RoleManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Locator.cpp">
+    <ClCompile Include="Decisions.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="World.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
+    <ClCompile Include="Explorations.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -58,7 +67,25 @@
     <ClInclude Include="Hero.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DecisionManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplorationManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ExecutionManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
     <ClInclude Include="MapManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Decisions.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Executions.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Explorations.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Menu.h">
@@ -74,15 +101,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="RoleManager.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Locator.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="World.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

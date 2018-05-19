@@ -10,14 +10,13 @@ class MapManager
 public:
 	MapManager();
 	~MapManager();
-	sf::Vector2i* getHeroPos();
+	POSITION* getHeroPos();
 	int** getMap();
 	sf::Sprite* getMapSprite();
-	void update();
 private:
 	
 	MAP _map[MAP_HEIGHT][MAP_WIDTH];
-	sf::Vector2i _heroPos;
+	POSITION _heroPos;
 	sf::Sprite _map1Sprite;
 	sf::Texture _map1Tex;
 };

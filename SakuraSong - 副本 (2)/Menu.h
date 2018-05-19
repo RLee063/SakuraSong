@@ -1,13 +1,10 @@
 #pragma once
 #include "Includes.h"
 #include <list>
-#include "GameObject.h"
-#include "Locator.h"
 
-class Button : public GameObject {
+class Button {
 public:
 	sf::Sprite* getSprite();
-	virtual void update();
 protected:
 	sf::Sprite _mySprite;
 	sf::Texture _myTexture;
@@ -20,16 +17,16 @@ private:
 };
 
 using namespace std;
-class Menu : public GameObject
+class Menu
 {
 public:
 	Menu();
 	~Menu();
+	virtual list<sf::Sprite*> getRenderList() = 0;
 	virtual sf::Vector2i * getButtonIndex();
 	virtual sf::Vector2i * getButtonNum();
 	virtual sf::Sprite* getButtonBoxS();
 	virtual Button*** getButtonArr();
-	virtual void update();
 protected:
 	sf::Vector2i _buttonNum;
 	sf::Vector2i _buttonIndex;
@@ -44,5 +41,6 @@ protected:
 class MainMenu :public Menu{
 public:
 	MainMenu();
+	list<sf::Sprite*> getRenderList();
 private:
 };

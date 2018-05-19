@@ -152,32 +152,38 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="DecisionManager.cpp" />
+    <ClCompile Include="Decisions.cpp" />
+    <ClCompile Include="ExecutionManager.cpp" />
+    <ClCompile Include="Executions.cpp" />
+    <ClCompile Include="ExplorationManager.cpp" />
+    <ClCompile Include="Explorations.cpp" />
     <ClCompile Include="Hero.cpp" />
-    <ClCompile Include="Locator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuManager.cpp" />
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="RoleManager.cpp" />
-    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
     <None Include="..\todoList.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Decisions.h" />
+    <ClInclude Include="DecisionManager.h" />
+    <ClInclude Include="ExecutionManager.h" />
+    <ClInclude Include="Executions.h" />
+    <ClInclude Include="Explorations.h" />
+    <ClInclude Include="ExplorationManager.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="Includes.h" />
-    <ClInclude Include="Locator.h" />
     <ClInclude Include="MapManager.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuManager.h" />
     <ClInclude Include="RenderManager.h" />
     <ClInclude Include="RoleManager.h" />
-    <ClInclude Include="World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

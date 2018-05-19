@@ -1,5 +1,5 @@
 #include "MapManager.h"
-#include "Locator.h"
+
 MapManager::MapManager()
 {
 	_map1Tex.loadFromFile("D:\\_Windows_saving\\GitHub\\SakuraSong\\SakuraSong\\src\\picture\\map1.png");
@@ -15,7 +15,7 @@ MapManager::~MapManager()
 
 }
 
-sf::Vector2i* MapManager::getHeroPos() {
+POSITION* MapManager::getHeroPos() {
 	return &_heroPos;
 }
 
@@ -26,9 +26,4 @@ int** MapManager::getMap() {
 sf::Sprite * MapManager::getMapSprite()
 {
 	return &_map1Sprite;
-}
-
-void MapManager::update()
-{
-	Locator::getWindow()->draw(_map1Sprite);
 }

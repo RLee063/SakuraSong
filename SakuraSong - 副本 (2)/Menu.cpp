@@ -1,5 +1,5 @@
 #include "Menu.h"
-#include <SFML\Graphics.hpp>
+
 Menu::Menu()
 {
 }
@@ -7,7 +7,6 @@ Menu::Menu()
 Menu::~Menu(){
 
 }
-
 sf::Vector2i * Menu::getButtonIndex()
 {
 	return &_buttonIndex;
@@ -23,18 +22,6 @@ sf::Sprite * Menu::getButtonBoxS()
 Button *** Menu::getButtonArr()
 {
 	return _buttonsArr;
-}
-void Menu::update()
-{
-	sf::RenderWindow * window = Locator::getWindow();
-
-	window->draw(_framework);
-	for (int i = 0; i < _buttonNum.x; i++) {
-		for (int j = 0; j < _buttonNum.y; j++) {
-			window->draw(*_buttonsArr[i][j]->getSprite());
-		}
-	}
-	window->draw(_selectedBox);
 }
 #define MAIN_MENU_POSITION_X 0
 #define MAIN_MENU_POSITION_Y 500
@@ -70,7 +57,18 @@ MainMenu::MainMenu()
 	_buttonIndex.y = 0;
 }
 
-
+list<sf::Sprite*> MainMenu::getRenderList()
+{
+	list<sf::Sprite*> sList;
+	sList.push_back(&_framework);
+	for (int i = 0; i < _buttonNum.x; i++) {
+		for (int j = 0; j < _buttonNum.y; j++) {
+			sList.push_back(_buttonsArr[i][j]->getSprite());
+		}
+	}
+	sList.push_back(&_selectedBox);
+	return sList;
+}
 
 MainMenuButton::MainMenuButton(int i_x, int i_y)
 {
@@ -85,9 +83,4 @@ MainMenuButton::MainMenuButton(int i_x, int i_y)
 sf::Sprite * Button::getSprite()
 {
 	return &_mySprite;
-}
-
-void Button::update()
-{
-	Locator::getWindow()->draw(_mySprite);
 }

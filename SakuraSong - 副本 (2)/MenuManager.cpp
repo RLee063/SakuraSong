@@ -1,5 +1,7 @@
 #include "MenuManager.h"
-#include "Menu.h"
+
+
+
 MenuManager::MenuManager()
 {
 	Menu * mainMenuP = new MainMenu();
@@ -34,10 +36,13 @@ void MenuManager::leftMainMenu()
 	_menuList.pop_back();
 }
 
-void MenuManager::update()
+list<sf::Sprite*> MenuManager::getRenderList()
 {
 	list<sf::Sprite*> sList;
 	for (auto i : _menuList) {
-		i->update();
+		for (auto j : i->getRenderList()) {
+			sList.push_back(j);
+		}
 	}
+	return sList;
 }

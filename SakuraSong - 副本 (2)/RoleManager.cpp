@@ -1,7 +1,10 @@
 #include "RoleManager.h"
+#include "ExplorationManager.h"
 
-RoleManager::RoleManager()
+
+RoleManager::RoleManager(ExplorationManager * expM)
 {
+	_expM = expM;
 	_hero = new Hero();
 }
 
@@ -19,9 +22,4 @@ list<sf::Sprite*> RoleManager::getRenderList()
 	list<sf::Sprite*> sList;
 	sList.push_back(_hero->getSprite());
 	return sList;
-}
-
-void RoleManager::update()
-{
-	_hero->update();
 }
