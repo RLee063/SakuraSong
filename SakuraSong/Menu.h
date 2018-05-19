@@ -3,28 +3,17 @@
 #include <list>
 #include "GameObject.h"
 #include "Locator.h"
-
-class Button : public GameObject {
-public:
-	sf::Sprite* getSprite();
-	virtual void update();
-protected:
-	sf::Sprite _mySprite;
-	sf::Texture _myTexture;
-};
-
-class MainMenuButton :public Button {
-public:
-	MainMenuButton(int i_x, int i_y);
-private:
-};
+#include "Button.h"
 
 using namespace std;
 class Menu : public GameObject
 {
+};
+
+class buttonMenu : public Menu {
 public:
-	Menu();
-	~Menu();
+	buttonMenu();
+	~buttonMenu();
 	sf::Vector2i * getButtonIndex();
 	sf::Vector2i * getButtonNum();
 	sf::Sprite* getButtonBoxS();
@@ -43,7 +32,7 @@ protected:
 };
 
 
-class MainMenu :public Menu{
+class MainMenu :public buttonMenu{
 public:
 	MainMenu();
 private:

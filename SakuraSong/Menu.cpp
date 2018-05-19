@@ -2,31 +2,32 @@
 #include <SFML\Graphics.hpp>
 #include "MenuManager.h"
 #include "Control.h"
-Menu::Menu()
+
+buttonMenu::buttonMenu()
 {
 }
 
-Menu::~Menu(){
+buttonMenu::~buttonMenu(){
 
 }
 
-sf::Vector2i * Menu::getButtonIndex()
+sf::Vector2i * buttonMenu::getButtonIndex()
 {
 	return &_buttonIndex;
 }
-sf::Vector2i * Menu::getButtonNum()
+sf::Vector2i * buttonMenu::getButtonNum()
 {
 	return &_buttonNum;
 }
-sf::Sprite * Menu::getButtonBoxS()
+sf::Sprite * buttonMenu::getButtonBoxS()
 {
 	return &_selectedBox;
 }
-Button *** Menu::getButtonArr()
+Button *** buttonMenu::getButtonArr()
 {
 	return _buttonsArr;
 }
-void Menu::update()
+void buttonMenu::update()
 {
 	//graphic
 	if (!_isVisible) {
@@ -41,7 +42,7 @@ void Menu::update()
 	}
 	window->draw(_selectedBox);
 }
-void Menu::moveButton(DIRECTION dir)
+void buttonMenu::moveButton(DIRECTION dir)
 {
 	if (isButtomMoveable(dir)) {
 		switch (dir)
@@ -65,7 +66,7 @@ void Menu::moveButton(DIRECTION dir)
 	}
 }
 
-bool Menu::isButtomMoveable(DIRECTION dir)
+bool buttonMenu::isButtomMoveable(DIRECTION dir)
 {
 	switch (dir)
 	{
@@ -125,7 +126,7 @@ void MainMenu::update()
 {
 	handleInput();
 	//graphic
-	Menu::update();
+	buttonMenu::update();
 }
 
 void MainMenu::handleInput()
@@ -158,24 +159,4 @@ void MainMenu::handleInput()
 			Locator::getMenuManager()->add(this);
 		}
 	}
-}
-
-MainMenuButton::MainMenuButton(int i_x, int i_y)
-{
-	string Path1 = "D:\\_Windows_saving\\GitHub\\SakuraSong\\SakuraSong\\src\\texture\\mainButtons";
-	string Path2 = to_string(i_x);
-	string Path3 = to_string(i_y);
-	string Path4 = ".png";
-	_myTexture.loadFromFile(Path1+Path2+Path3+Path4);
-	_mySprite.setTexture(_myTexture);
-}
-
-sf::Sprite * Button::getSprite()
-{
-	return &_mySprite;
-}
-
-void Button::update()
-{
-	Locator::getWindow()->draw(_mySprite);
 }

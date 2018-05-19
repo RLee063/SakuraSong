@@ -48,6 +48,9 @@
     <ClCompile Include="Control.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\todoList.md">
@@ -89,6 +92,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Control.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

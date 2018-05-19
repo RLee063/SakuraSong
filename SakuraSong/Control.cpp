@@ -32,5 +32,5 @@ void Control::clear()
 
 bool Control::ifPressedKey(int code)
 {
-	return *((char*)&_keyPressed + code);
+	return *((bool*)&_keyPressed + code);
 }

@@ -152,6 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Hero.cpp" />
@@ -169,6 +170,7 @@
     <None Include="..\todoList.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Control.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Hero.h" />
