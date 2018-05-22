@@ -30,11 +30,11 @@ Button *** buttonMenu::getButtonArr()
 void buttonMenu::update()
 {
 	//graphic
+	Menu::update();
 	if (!_isVisible) {
 		return;
 	}
 	sf::RenderWindow * window = Locator::getWindow();
-	window->draw(_framework);
 	for (int i = 0; i < _buttonNum.x; i++) {
 		for (int j = 0; j < _buttonNum.y; j++) {
 			window->draw(*_buttonsArr[i][j]->getSprite());
@@ -146,6 +146,9 @@ void MainMenu::handleInput()
 			if (Locator::getControl()->ifPressedKey(sf::Keyboard::D)) {
 				dir = RIGHT;
 			}
+			if (Locator::getControl()->ifPressedKey(sf::Keyboard::J)) {
+				_buttonsArr[_buttonIndex.x][_buttonIndex.y]->selected();
+			}
 			if (dir != NODIRECTION) {
 				moveButton(dir);
 			}
@@ -158,5 +161,12 @@ void MainMenu::handleInput()
 		if(Locator::getControl()->ifPressedKey(sf::Keyboard::K)){
 			Locator::getMenuManager()->add(this);
 		}
+	}
+}
+
+void Menu::update()
+{
+	if (_isVisible) {
+		Locator::getWindow()->draw(_framework);
 	}
 }

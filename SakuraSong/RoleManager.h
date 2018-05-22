@@ -1,6 +1,6 @@
 #pragma once
 #include "Includes.h"
-#include "Hero.h"
+#include "Role.h"
 #include <list>
 #include "Locator.h"
 using namespace std;

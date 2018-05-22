@@ -11,7 +11,7 @@ World::World()
 	_currentRenderManager = new RenderManager();
 	_currentControl = new Control();
 	_currentWindow = new sf::RenderWindow(sf::VideoMode(MAP_HEIGHT_PIX, MAP_WIDTH_PIX), "SFML works!");
-	Locator::init(_currentMapManager, _currentMenuManager, _currentRoleManager, _currentRenderManager, _currentWindow, _currentControl);
+	Locator::init(_currentMapManager, _currentMenuManager, _currentRoleManager, _currentRenderManager, _currentWindow, _currentControl, this);
 }
 
 World::~World()
@@ -100,4 +100,14 @@ void World::update()
 	_currentMapManager->update();
 	_currentRoleManager->update();
 	_currentMenuManager->update();
+}
+
+void World::addObject(GameObject * obj)
+{
+	_objectList.push_back(obj);
+}
+
+void World::removeObject()
+{
+	_objectList.pop_back();
 }

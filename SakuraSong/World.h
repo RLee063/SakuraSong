@@ -4,6 +4,9 @@
 #include "MenuManager.h"
 #include "RoleManager.h"
 #include "RenderManager.h"
+#include "GameObject.h"
+#include <list>
+using namespace std;
 
 class World
 {
@@ -13,6 +16,8 @@ public:
 	void worldLoop();
 	void handleInput(int code);
 	void update();
+	void addObject(GameObject * obj);
+	void removeObject();
 private:
 	sf::RenderWindow* _currentWindow;
 	MenuManager * _currentMenuManager;
@@ -20,5 +25,6 @@ private:
 	RoleManager * _currentRoleManager;
 	RenderManager * _currentRenderManager;
 	Control * _currentControl;
+	list<GameObject *> _objectList;
 };
 

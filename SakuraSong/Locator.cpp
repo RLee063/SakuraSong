@@ -4,6 +4,7 @@
 #include "RoleManager.h"
 #include "RenderManager.h"
 #include "Control.h"
+#include "World.h"
 
 sf::RenderWindow* Locator::_currentWindow;
 MapManager*  Locator::_currentMapManager;
@@ -12,7 +13,7 @@ RoleManager* Locator::_currentRoleManager;
 RenderManager* Locator::_currentRenderManager;
 Control * Locator::_currentControl;
 
-void Locator::init(MapManager * map, MenuManager* menu, RoleManager* role, RenderManager* render, sf::RenderWindow * window, Control * cont)
+void Locator::init(MapManager * map, MenuManager* menu, RoleManager* role, RenderManager* render, sf::RenderWindow * window, Control * cont, World * world)
 {
 	_currentMapManager = map;
 	_currentMenuManager = menu;
@@ -20,6 +21,7 @@ void Locator::init(MapManager * map, MenuManager* menu, RoleManager* role, Rende
 	_currentRenderManager = render;
 	_currentWindow = window;
 	_currentControl = cont;
+	_currentWorld = world;
 }
 
 Locator::~Locator()
@@ -57,5 +59,10 @@ sf::RenderWindow * Locator::getWindow()
 Control * Locator::getControl()
 {
 	return _currentControl;
+}
+
+World * Locator::getWorld()
+{
+	return _currentWorld;
 }
 

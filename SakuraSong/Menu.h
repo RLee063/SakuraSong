@@ -8,6 +8,11 @@
 using namespace std;
 class Menu : public GameObject
 {
+public:
+	virtual void update();
+protected:
+	sf::Sprite _framework;
+	sf::Texture _frameworkT;
 };
 
 class buttonMenu : public Menu {
@@ -25,8 +30,6 @@ protected:
 	sf::Vector2i _buttonNum;
 	sf::Vector2i _buttonIndex;
 	Button *** _buttonsArr;
-	sf::Sprite _framework;
-	sf::Texture _frameworkT;
 	sf::Sprite _selectedBox;
 	sf::Texture _selectedBoxT;
 };
@@ -35,7 +38,7 @@ protected:
 class MainMenu :public buttonMenu{
 public:
 	MainMenu();
-private:
 	void update();
+private:
 	void handleInput();
 };

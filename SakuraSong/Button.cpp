@@ -13,6 +13,11 @@ MainMenuButton::MainMenuButton(int i_x, int i_y)
 	_mySprite.setTexture(_myTexture);
 }
 
+void MainMenuButton::selected()
+{
+	cout << "fuck u" << endl;
+}
+
 sf::Sprite * Button::getSprite()
 {
 	return &_mySprite;
