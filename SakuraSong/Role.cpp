@@ -7,15 +7,27 @@
 #include "MenuManager.h"
 #include "Control.h"
 using namespace std;
-#define ANIMATION_DELAY 70
 
 Role::Role()
 {
 }
 
-
 Role::~Role()
 {
+}
+
+sf::Sprite* Role::getSprite() {
+	return &_mySprite;
+}
+
+void Hero::setDirection(DIRECTION* dir)
+{
+	_direction = *dir;
+}
+
+DIRECTION* Hero::getDirection()
+{
+	return &_direction;
 }
 
 Hero::Hero()
@@ -31,34 +43,20 @@ Hero::Hero()
 		}
 	}
 	_mySprite.setTexture(_myTexture[0][0]);
-	_mySprite.setPosition(sf::Vector2f(400, 400));
+	_mySprite.setPosition(sf::Vector2f((float)WALK_LENGTH * 6, (float)WALK_LENGTH * 6));
 	_textureIndex = 0;
 	_isMoving = false;
+	_isBattle = false;
+	//////////////////////////
+	_battleT.loadFromFile("D:\\_Windows_saving\\GitHub\\SakuraSong\\SakuraSong\\src\\texture\\battle\\hero.png");
+	////
+	_HP = 200;
+	_attackPower = 33;
 }
 
 Hero::~Hero()
 {
 
-}
-
-sf::Sprite* Role::getSprite() {
-	return &_mySprite;
-}
-
-void Role::setDirection(DIRECTION* dir)
-{
-	_direction = *dir;
-}
-
-
-DIRECTION* Role::getDirection()
-{
-	return &_direction;
-}
-
-bool Role::isMoving()
-{
-	return _isMoving;
 }
 
 bool Hero::isMoveable(DIRECTION * direction)
@@ -68,16 +66,16 @@ bool Hero::isMoveable(DIRECTION * direction)
 	switch (*direction)
 	{
 	case UP:
-		if (heroPos->y - 1 < 1) return 0;
+		if (heroPos->y - 1 < 0) return 0;
 		break;
 	case DOWN:
-		if (heroPos->y + 1 > MAP_HEIGHT) return 0;
+		if (heroPos->y + 1 > MAP_HEIGHT-1) return 0;
 		break;
 	case LEFT:
-		if (heroPos->x - 1 < 1) return 0;
+		if (heroPos->x - 1 < 0) return 0;
 		break;
 	case RIGHT:
-		if (heroPos->x + 1 > MAP_WIDTH) return 0;
+		if (heroPos->x + 1 > MAP_WIDTH-1) return 0;
 		break;
 	default:
 		break;
@@ -87,32 +85,36 @@ bool Hero::isMoveable(DIRECTION * direction)
 
 void Hero::startMove(DIRECTION * dir)
 {
-	if (isMoving()) {
-		return;
-	}
 	_mySprite.setTexture(_myTexture[*dir][_textureIndex]);
 	if (isMoveable(dir)) {
 		_isMoving = true;
 		setDirection(dir);
-		sf::Vector2i *posInMap = Locator::getMapManager()->getHeroPos();
-		switch (*dir)
-		{
-		case UP:
-			posInMap->y -= 1;
-			break;
-		case DOWN:
-			posInMap->y += 1;
-			break;
-		case LEFT:
-			posInMap->x -= 1;
-			break;
-		case RIGHT:
-			posInMap->x += 1;
-			break;
-		default:
-			break;
-		}
 	}
+}
+
+void Hero::swapStat()
+{
+	if (!_isBattle) {
+		_isBattle = true;
+		_mySprite.setTexture(_battleT);
+		_mySprite.setPosition(sf::Vector2f(100,300));
+	}
+	else {
+		_isBattle = false;
+		_mySprite.setTexture(_myTexture[_direction][0]);
+		sf::Vector2i* pos = Locator::getMapManager()->getHeroPos();
+		_mySprite.setPosition(sf::Vector2f((float)WALK_LENGTH*(pos->x), (float)WALK_LENGTH*(pos->y)));
+	}
+}
+
+void Hero::attack(GameObject * obj)
+{
+	((Enemy*)obj)->injured(_attackPower);
+}
+
+void Hero::injured(int agg)
+{
+	_HP -= agg;
 }
 
 void Hero::update()
@@ -146,6 +148,24 @@ void Hero::update()
 				_isMoving = 0;
 				_textureIndex = 0;
 				_animationCount = 0;
+				sf::Vector2i *posInMap = Locator::getMapManager()->getHeroPos();
+				switch (_direction)
+				{
+				case UP:
+					posInMap->y -= 1;
+					break;
+				case DOWN:
+					posInMap->y += 1;
+					break;
+				case LEFT:
+					posInMap->x -= 1;
+					break;
+				case RIGHT:
+					posInMap->x += 1;
+					break;
+				default:
+					break;
+				}
 			}
 		}
 	}
@@ -154,6 +174,9 @@ void Hero::update()
 
 void Hero::handleInput()
 {
+	if (_isMoving || _isBattle) {
+		return;
+	}
 	if (Locator::getMenuManager()->getCurrentMenu() == NULL) {
 		DIRECTION dir = NODIRECTION;
 		Control * control = Locator::getControl();
@@ -173,4 +196,31 @@ void Hero::handleInput()
 			startMove(&dir);
 		}
 	}
+}
+
+Enemy::Enemy()
+{
+	_HP = 100;
+	_attackPower = 20;
+	_myT.loadFromFile("D:\\_Windows_saving\\GitHub\\SakuraSong\\SakuraSong\\src\\texture\\battle\\xiyi.png");
+	_mySprite.setPosition(sf::Vector2f(700, 300));
+	_mySprite.setTexture(_myT);
+}
+
+void Enemy::attack(GameObject * obj)
+{
+	((Hero*)obj)->injured(_attackPower);
+}
+
+void Enemy::injured(int agg)
+{
+	_HP -= agg;
+}
+
+void Enemy::update()
+{
+	if (_isVisible) {
+		Locator::getWindow()->draw(_mySprite);
+	}
+	cout << _HP << endl;
 }

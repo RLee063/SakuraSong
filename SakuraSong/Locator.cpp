@@ -12,6 +12,7 @@ MenuManager* Locator::_currentMenuManager;
 RoleManager* Locator::_currentRoleManager;
 RenderManager* Locator::_currentRenderManager;
 Control * Locator::_currentControl;
+World * Locator::_currentWorld;
 
 void Locator::init(MapManager * map, MenuManager* menu, RoleManager* role, RenderManager* render, sf::RenderWindow * window, Control * cont, World * world)
 {

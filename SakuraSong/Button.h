@@ -19,3 +19,12 @@ public:
 	void selected();
 private:
 };
+
+class AttackButton :public Button {
+public:
+	AttackButton();
+	void selected();
+	void update();
+private:
+	int _time;
+};

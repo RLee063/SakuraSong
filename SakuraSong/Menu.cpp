@@ -96,7 +96,6 @@ MainMenu::MainMenu()
 {
 	_buttonNum.x = 2;
 	_buttonNum.y = 2;
-
 	_buttonsArr = new Button **[_buttonNum.x];
 	for (int i = 0; i < _buttonNum.x; i++) {
 		_buttonsArr[i] = new Button *[_buttonNum.y];
@@ -168,5 +167,68 @@ void Menu::update()
 {
 	if (_isVisible) {
 		Locator::getWindow()->draw(_framework);
+	}
+}
+
+BattleMainMenu::BattleMainMenu()
+{
+	_buttonNum.x = 2;
+	_buttonNum.y = 2;
+	_buttonsArr = new Button **[_buttonNum.x];
+	for (int i = 0; i < _buttonNum.x; i++) {
+		_buttonsArr[i] = new Button *[_buttonNum.y];
+	}
+
+	_frameworkT.loadFromFile("D:\\_Windows_saving\\GitHub\\SakuraSong\\SakuraSong\\src\\texture\\mainMenuFramwork.png");
+	_framework.setTexture(_frameworkT);
+	_framework.setPosition(sf::Vector2f(MAIN_MENU_POSITION_X, MAIN_MENU_POSITION_Y));
+	for (int i = 0; i < _buttonNum.x; i++) {
+		for (int j = 0; j < _buttonNum.y; j++) {
+			_buttonsArr[i][j] = new MainMenuButton(i, j);
+			_buttonsArr[i][j]->getSprite()->setPosition((float)
+				MAIN_MENU_POSITION_X + 50 + (j*((MAIN_MENU_WEIGHTH - 150) / _buttonNum.x)),
+				(float)
+				MAIN_MENU_POSITION_Y + 20 + (i*((MAIN_MENU_HEIGHT - 60) / _buttonNum.y))
+			);
+		}
+	}
+	_buttonsArr[0][0] = new AttackButton();
+	_buttonsArr[0][0]->getSprite()->setPosition(MAIN_MENU_POSITION_X + 50, MAIN_MENU_POSITION_Y + 20);
+	_selectedBoxT.loadFromFile("D:\\_Windows_saving\\GitHub\\SakuraSong\\SakuraSong\\src\\texture\\mainButtonSelected.png");
+	_selectedBox.setTexture(_selectedBoxT);
+	_selectedBox.setPosition(_buttonsArr[0][0]->getSprite()->getPosition());
+	_buttonIndex.x = 0;
+	_buttonIndex.y = 0;
+}
+
+void BattleMainMenu::update()
+{
+	handleInput();
+	//graphic
+	buttonMenu::update();
+}
+
+void BattleMainMenu::handleInput()
+{
+	if (Locator::getMenuManager()->getCurrentMenu() == this) {
+		DIRECTION dir = NODIRECTION;
+		if (Locator::getControl()->ifPressedKey(sf::Keyboard::W)) {
+			dir = UP;
+		}
+		if (Locator::getControl()->ifPressedKey(sf::Keyboard::S)) {
+			dir = DOWN;
+		}
+		if (Locator::getControl()->ifPressedKey(sf::Keyboard::A)) {
+			dir = LEFT;
+		}
+		if (Locator::getControl()->ifPressedKey(sf::Keyboard::D)) {
+			dir = RIGHT;
+		}
+		if (Locator::getControl()->ifPressedKey(sf::Keyboard::J)) {
+			_buttonsArr[_buttonIndex.x][_buttonIndex.y]->selected();
+		}
+		if (dir != NODIRECTION) {
+			moveButton(dir);
+		}
 	}
 }

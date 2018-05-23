@@ -152,10 +152,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BattleManager.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="Hero.cpp" />
     <ClCompile Include="Locator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapManager.cpp" />
@@ -164,6 +164,7 @@
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="Role.cpp" />
     <ClCompile Include="RoleManager.cpp" />
+    <ClCompile Include="State.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -171,10 +172,10 @@
     <None Include="..\todoList.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BattleManager.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Control.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Hero.h" />
     <ClInclude Include="Includes.h" />
     <ClInclude Include="Locator.h" />
     <ClInclude Include="MapManager.h" />
@@ -183,6 +184,8 @@
     <ClInclude Include="RenderManager.h" />
     <ClInclude Include="Role.h" />
     <ClInclude Include="RoleManager.h" />
+    <ClInclude Include="State.h" />
+    <ClInclude Include="testInclude.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

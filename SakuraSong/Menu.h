@@ -42,3 +42,11 @@ public:
 private:
 	void handleInput();
 };
+
+class BattleMainMenu : public buttonMenu {
+public:
+	BattleMainMenu();
+	void update();
+private:
+	void handleInput();
+};

@@ -5,9 +5,10 @@
 #define MAP_HEIGHT_PIX 800
 #define MAP_WIDTH_PIX 800
 #define WALK_LENGTH MAP_HEIGHT_PIX/MAP_HEIGHT
+#define ANIMATION_DELAY 70
 typedef enum {
 	GROUND,
-	HERO
+	WATER
 }MAP;
 
 typedef enum {

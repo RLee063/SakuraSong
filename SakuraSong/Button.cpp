@@ -1,5 +1,7 @@
 #include "Button.h"
+#include "MapManager.h"
 #include "Locator.h"
+#include "RoleManager.h"
 #include <string>
 using namespace std;
 
@@ -15,7 +17,7 @@ MainMenuButton::MainMenuButton(int i_x, int i_y)
 
 void MainMenuButton::selected()
 {
-	cout << "fuck u" << endl;
+	cout << "hello" << endl;
 }
 
 sf::Sprite * Button::getSprite()
@@ -26,4 +28,23 @@ sf::Sprite * Button::getSprite()
 void Button::update()
 {
 	Locator::getWindow()->draw(_mySprite);
+}
+
+AttackButton::AttackButton()
+{
+	_myTexture.loadFromFile("D:\\_Windows_saving\\GitHub\\SakuraSong\\SakuraSong\\src\\texture\\mainButtons00.png");
+	_mySprite.setTexture(_myTexture);
+	_time = 0;
+}
+
+void AttackButton::selected()
+{
+	Hero * hero = Locator::getRoleManager()->getHero();
+	Enemy * enemy = Locator::getRoleManager()->getEnemy();
+	hero->attack(enemy);
+	enemy->attack(hero);
+}
+
+void AttackButton::update() {
+	Button::update();
 }

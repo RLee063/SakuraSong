@@ -8,14 +8,9 @@ public:
 	Role();
 	~Role();
 	sf::Sprite* getSprite();
-	DIRECTION* getDirection();
-	void setDirection(DIRECTION* dir);
-	bool isMoving();
-protected:
 
+protected:
 	sf::Sprite _mySprite;
-	DIRECTION _direction;
-	bool _isMoving;
 	int _animationCount;
 };
 
@@ -29,13 +24,33 @@ public:
 	void handleInput();
 	bool isMoveable(DIRECTION * direction);
 	void startMove(DIRECTION * direction);
-
+	void setDirection(DIRECTION* dir);
+	DIRECTION* getDirection();
+	void swapStat();
+	DIRECTION _direction;
+	//========================
+	void attack(GameObject * obj);
+	void injured(int agg);
 private:
 	const static int heroTextureNumber = 4;
 	sf::Texture _myTexture[4][heroTextureNumber];
 	int _textureIndex;
+	bool _isMoving;
+	//------------battle---------
+	bool _isBattle;
+	sf::Texture _battleT;
+	int _HP;
+	int _attackPower;
 };
 
-class Villager :public Role {
-
+class Enemy :public Role {
+public:
+	Enemy();
+	void attack(GameObject * obj);
+	void injured(int agg);
+	void update();
+private:
+	int _HP;
+	int _attackPower;
+	sf::Texture _myT;
 };
