@@ -29,6 +29,7 @@ public:
 	void swapStat();
 	DIRECTION _direction;
 	//========================
+	int getHp();
 	void attack(GameObject * obj);
 	void injured(int agg);
 private:
@@ -49,6 +50,7 @@ public:
 	void attack(GameObject * obj);
 	void injured(int agg);
 	void update();
+	int getHp();
 private:
 	int _HP;
 	int _attackPower;

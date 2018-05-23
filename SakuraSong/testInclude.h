@@ -5,3 +5,6 @@
 #include "RenderManager.h"
 #include "RoleManager.h"
 #include "Control.h"
+#include "Menu.h"
+#include "Role.h"
+#include "BattleManager.h"

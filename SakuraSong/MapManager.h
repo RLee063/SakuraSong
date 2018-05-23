@@ -5,7 +5,6 @@
 #include "GameObject.h"
 using namespace std;
 
-
 class MapManager
 {
 public:

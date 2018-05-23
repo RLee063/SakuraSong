@@ -107,6 +107,11 @@ void Hero::swapStat()
 	}
 }
 
+int Hero::getHp()
+{
+	return _HP;
+}
+
 void Hero::attack(GameObject * obj)
 {
 	((Enemy*)obj)->injured(_attackPower);
@@ -223,4 +228,9 @@ void Enemy::update()
 		Locator::getWindow()->draw(_mySprite);
 	}
 	cout << _HP << endl;
+}
+
+int Enemy::getHp()
+{
+	return _HP;
 }

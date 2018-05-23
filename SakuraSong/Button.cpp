@@ -2,6 +2,7 @@
 #include "MapManager.h"
 #include "Locator.h"
 #include "RoleManager.h"
+#include "BattleManager.h"
 #include <string>
 using namespace std;
 
@@ -39,8 +40,8 @@ AttackButton::AttackButton()
 
 void AttackButton::selected()
 {
-	Hero * hero = Locator::getRoleManager()->getHero();
-	Enemy * enemy = Locator::getRoleManager()->getEnemy();
+	Hero * hero = Locator::getBattleManager()->getHero();
+	Enemy * enemy = Locator::getBattleManager()->getEnemy();
 	hero->attack(enemy);
 	enemy->attack(hero);
 }

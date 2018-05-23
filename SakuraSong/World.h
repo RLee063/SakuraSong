@@ -19,12 +19,6 @@ public:
 	void addObject(GameObject * obj);
 	void removeObject();
 private:
-	sf::RenderWindow* _currentWindow;
-	MenuManager * _currentMenuManager;
-	MapManager * _currentMapManager;
-	RoleManager * _currentRoleManager;
-	RenderManager * _currentRenderManager;
-	Control * _currentControl;
 	list<GameObject *> _objectList;
 };
 

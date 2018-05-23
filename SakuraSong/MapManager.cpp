@@ -4,6 +4,7 @@
 #include "MenuManager.h"
 #include "Menu.h"
 #include "RoleManager.h"
+#include "BattleManager.h"
 MapManager::MapManager()
 {
 	_map1Tex.loadFromFile("D:\\_Windows_saving\\GitHub\\SakuraSong\\SakuraSong\\src\\picture\\map1.png");
@@ -13,7 +14,11 @@ MapManager::MapManager()
 	memset(_map, 0, MAP_HEIGHT*MAP_WIDTH*4);
 	memset(_mapO, 0, MAP_HEIGHT*MAP_WIDTH*4);
 	//-------------
-	_mapO[8][8] = new Enemy();
+	for (int i = 0; i < 20; i++) {
+		int x = rand() % 9;
+		int y = rand() % 9;
+		_mapO[x][y] = new Enemy();
+	}
 	//-------------
 	_heroPos.x = 6;
 	_heroPos.y = 6;
@@ -40,10 +45,10 @@ sf::Sprite * MapManager::getMapSprite()
 void MapManager::update()
 {
 	if (_mapO[_heroPos.x][_heroPos.y] != NULL) {
-		Locator::getMapManager()->swatchBack();
-		Locator::getMenuManager()->add(new BattleMainMenu());
-		Locator::getRoleManager()->getHero()->swapStat();
 		Locator::getRoleManager()->setEnemy(_mapO[_heroPos.x][_heroPos.y]);
+		Locator::getBattleManager()->addToFriend(Locator::getRoleManager()->getHero());
+		Locator::getBattleManager()->addToEnemy(_mapO[_heroPos.x][_heroPos.y]);
+		Locator::getBattleManager()->start();
 		_mapO[_heroPos.x][_heroPos.y] = NULL;
 	}
 	Locator::getWindow()->draw(_backGroundS);
@@ -51,5 +56,11 @@ void MapManager::update()
 
 void MapManager::swatchBack()
 {
-	_backGroundS.setTexture(_battle1T);
+	if (_backGroundS.getTexture() == &_map1Tex) {
+		_backGroundS.setTexture(_battle1T);
+	}
+	else {
+		_backGroundS.setTexture(_map1Tex);
+	}
+		
 }

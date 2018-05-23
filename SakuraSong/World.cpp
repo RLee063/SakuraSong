@@ -2,16 +2,10 @@
 #include "Locator.h"
 #include <SFML\Graphics.hpp>
 #include "Control.h"
-
+#include "BattleManager.h"
 World::World()
 {
-	_currentMapManager = new MapManager();
-	_currentMenuManager = new MenuManager();
-	_currentRoleManager = new RoleManager();
-	_currentRenderManager = new RenderManager();
-	_currentControl = new Control();
-	_currentWindow = new sf::RenderWindow(sf::VideoMode(MAP_HEIGHT_PIX, MAP_WIDTH_PIX), "SFML works!");
-	Locator::init(_currentMapManager, _currentMenuManager, _currentRoleManager, _currentRenderManager, _currentWindow, _currentControl, this);
+	Locator::init(new MapManager() , new MenuManager(), new RoleManager(), new RenderManager() , new sf::RenderWindow(sf::VideoMode(MAP_HEIGHT_PIX, MAP_WIDTH_PIX), "SFML works!"), new Control(),this, new BattleManager());
 }
 
 World::~World()
@@ -96,10 +90,11 @@ void World::handleInput(int code)
 
 void World::update()
 {
-	_currentControl->update();
-	_currentMapManager->update();
-	_currentRoleManager->update();
-	_currentMenuManager->update();
+	Locator::getControl()->update();
+	Locator::getMapManager()->update();
+	Locator::getRoleManager()->update();
+	Locator::getMenuManager()->update();
+	Locator::getBattleManager()->update();
 }
 
 void World::addObject(GameObject * obj)
@@ -110,4 +105,4 @@ void World::addObject(GameObject * obj)
 void World::removeObject()
 {
 	_objectList.pop_back();
-}
+} 
