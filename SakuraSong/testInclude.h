@@ -8,3 +8,6 @@
 #include "Menu.h"
 #include "Role.h"
 #include "BattleManager.h"
+#include "Scene.h"
+#include <iostream>
+#include <fstream>

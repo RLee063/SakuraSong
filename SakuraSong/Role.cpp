@@ -62,7 +62,7 @@ Hero::~Hero()
 bool Hero::isMoveable(DIRECTION * direction)
 {
 	sf::Vector2i* heroPos = Locator::getMapManager()->getHeroPos();
-	int ** map = Locator::getMapManager()->getMap();
+	int ** map = Locator::getMapManager()->getMapInfo();
 	switch (*direction)
 	{
 	case UP:

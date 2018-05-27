@@ -57,6 +57,15 @@
     <ClCompile Include="BattleManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BackGround.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Creator.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\todoList.md">
@@ -110,6 +119,18 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="BattleManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGround.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Creator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Typedef.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

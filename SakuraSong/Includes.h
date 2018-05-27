@@ -9,7 +9,7 @@
 typedef enum {
 	GROUND,
 	WATER
-}MAP;
+}MAPINFO;
 
 typedef enum {
 	UP,

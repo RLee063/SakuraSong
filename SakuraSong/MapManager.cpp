@@ -33,7 +33,7 @@ sf::Vector2i* MapManager::getHeroPos() {
 	return &_heroPos;
 }
 
-int** MapManager::getMap() {
+int** MapManager::getMapInfo() {
 	return (int**)_map;
 }
 

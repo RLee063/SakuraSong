@@ -11,13 +11,13 @@ public:
 	MapManager();
 	~MapManager();
 	sf::Vector2i* getHeroPos();
-	int** getMap();
+	int** getMapInfo();
 	sf::Sprite* getMapSprite();
 	void update();
 	//---------temp--------
 	void swatchBack();
 private:
-	MAP _map[MAP_HEIGHT][MAP_WIDTH];
+	MAPINFO _map[MAP_HEIGHT][MAP_WIDTH];
 	GameObject * _mapO[MAP_HEIGHT][MAP_WIDTH];
 	sf::Vector2i _heroPos;
 	sf::Sprite _backGroundS;

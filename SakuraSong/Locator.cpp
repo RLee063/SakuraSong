@@ -6,26 +6,29 @@
 #include "Control.h"
 #include "World.h"
 #include "BattleManager.h"
+#include "Creator.h"
 
-sf::RenderWindow* Locator::_currentWindow;
-MapManager*  Locator::_currentMapManager;
-MenuManager* Locator::_currentMenuManager;
+sf::RenderWindow* Locator::_window;
+MapManager*  Locator::_mapManager;
+MenuManager* Locator::_menuManager;
 RoleManager* Locator::_currentRoleManager;
 RenderManager* Locator::_currentRenderManager;
 Control * Locator::_currentControl;
 World * Locator::_currentWorld;
 BattleManager * Locator::_battleM;
+Creator * Locator::_creator;
 
-void Locator::init(MapManager * map, MenuManager* menu, RoleManager* role, RenderManager* render, sf::RenderWindow * window, Control * cont, World * world, BattleManager * battleM)
+void Locator::init(MapManager * map, MenuManager* menu, RoleManager* role, RenderManager* render, sf::RenderWindow * window, Control * cont, World * world, BattleManager * battleM, Creator * creator)
 {
 	_battleM = battleM;
-	_currentMapManager = map;
-	_currentMenuManager = menu;
+	_mapManager = map;
+	_menuManager = menu;
 	_currentRoleManager = role;
 	_currentRenderManager = render;
-	_currentWindow = window;
+	_window = window;
 	_currentControl = cont;
 	_currentWorld = world;
+	_creator = creator;
 }
 
 Locator::~Locator()
@@ -40,14 +43,14 @@ RenderManager * Locator::getRenderManager()
 
 MenuManager * Locator::getMenuManager()
 {
-	return _currentMenuManager;
+	return _menuManager;
 }
 
 
 
 MapManager * Locator::getMapManager()
 {
-	return _currentMapManager;
+	return _mapManager;
 }
 
 RoleManager * Locator::getRoleManager()
@@ -57,7 +60,7 @@ RoleManager * Locator::getRoleManager()
 
 sf::RenderWindow * Locator::getWindow()
 {
-	return _currentWindow;
+	return _window;
 }
 
 Control * Locator::getControl()
@@ -75,3 +78,7 @@ BattleManager * Locator::getBattleManager()
 	return _battleM;
 }
 
+Creator * Locator::getCreator()
+{
+	return _creator;
+}

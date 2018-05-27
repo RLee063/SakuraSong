@@ -3,5 +3,5 @@
 
 int main() {
 	World * myWorld = new World();
-	myWorld->worldLoop();
+	myWorld->start();
 }

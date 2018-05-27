@@ -5,6 +5,7 @@
 #include "RoleManager.h"
 #include "RenderManager.h"
 #include "GameObject.h"
+#include "Scene.h"
 #include <list>
 using namespace std;
 
@@ -16,9 +17,11 @@ public:
 	void worldLoop();
 	void handleInput(int code);
 	void update();
-	void addObject(GameObject * obj);
-	void removeObject();
+	void start();
+	Scene * getScene();
+	//void addObject(GameObject * obj);
+	//void removeObject();
 private:
-	list<GameObject *> _objectList;
+	//list<GameObject *> _objectList;
+	Scene * _scene;
 };
-
