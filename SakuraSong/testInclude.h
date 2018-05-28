@@ -9,5 +9,8 @@
 #include "Role.h"
 #include "BattleManager.h"
 #include "Scene.h"
+#include "Implement.h"
+#include "State.h"
+
 #include <iostream>
 #include <fstream>

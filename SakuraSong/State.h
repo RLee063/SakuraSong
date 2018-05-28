@@ -1,6 +1,10 @@
 #pragma once
 #include "Includes.h"
+
 class Hero;
+class RoleGraphicImplement;
+class RolePhysicsImplement;
+class Role;
 
 class State
 {
@@ -11,7 +15,42 @@ private:
 	virtual State* update() = 0;
 };
 
-class HeroStandState:public State {
+class RoleState {
+public:
+	RoleState(Role * obj);
+	virtual void  update();
+	void init(RoleGraphicImplement * gi, RolePhysicsImplement * pi);
+protected:
+	RoleGraphicImplement * _graphicIm;
+	RolePhysicsImplement * _physicsIm;
+	Role * _obj;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class HeroStandState :public State {
 public:
 	HeroStandState(Hero * obj);
 	State* handleInput();

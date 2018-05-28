@@ -157,6 +157,7 @@
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="Creator.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Implement.cpp" />
     <ClCompile Include="Locator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="BackGround.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="Control.h" />
     <ClInclude Include="Creator.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Implement.h" />
     <ClInclude Include="Includes.h" />
     <ClInclude Include="Locator.h" />
     <ClInclude Include="BackGround.h" />

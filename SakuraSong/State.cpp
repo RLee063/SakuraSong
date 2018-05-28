@@ -10,6 +10,8 @@ State::~State()
 {
 }
 
+
+
 HeroStandState::HeroStandState(Hero * obj)
 {
 	for (int i = 0; i < 4; i++) {
@@ -116,4 +118,21 @@ HeroBattleState::HeroBattleState(Hero * obj)
 State * HeroBattleState::update()
 {
 	return this;
+}
+
+RoleState::RoleState(Role * obj)
+{
+	_obj = obj;
+}
+
+void RoleState::update()
+{
+	_graphicIm->update();
+	_physicsIm->update();
+}
+
+void RoleState::init(RoleGraphicImplement * gi, RolePhysicsImplement * pi)
+{
+	_graphicIm = gi;
+	_physicsIm = pi;
 }
