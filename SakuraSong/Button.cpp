@@ -3,7 +3,9 @@
 #include "Locator.h"
 #include "RoleManager.h"
 #include "BattleManager.h"
+#include "testInclude.h"
 #include <string>
+#include "World.h"
 using namespace std;
 
 MainMenuButton::MainMenuButton(int i_x, int i_y)
@@ -40,10 +42,10 @@ AttackButton::AttackButton()
 
 void AttackButton::selected()
 {
-	Hero * hero = Locator::getBattleManager()->getHero();
-	Enemy * enemy = Locator::getBattleManager()->getEnemy();
-	hero->attack(enemy);
-	enemy->attack(hero);
+	Role * hero = ((BattleScene*)Locator::getWorld()->getScene())->getHero();
+	Role * enemy = ((BattleScene*)Locator::getWorld()->getScene())->getEnemy();
+	hero->setState(Locator::getCreator()->createRoleAttackState(hero));
+	enemy->setState(Locator::getCreator()->createRoleInjuredState(enemy));
 }
 
 void AttackButton::update() {

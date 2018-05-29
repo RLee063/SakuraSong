@@ -154,6 +154,7 @@
   <ItemGroup>
     <ClCompile Include="BattleManager.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Command.cpp" />
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="Creator.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="RoleManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="State.cpp" />
+    <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +180,7 @@
   <ItemGroup>
     <ClInclude Include="BattleManager.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="Command.h" />
     <ClInclude Include="Control.h" />
     <ClInclude Include="Creator.h" />
     <ClInclude Include="GameObject.h" />
@@ -193,6 +196,7 @@
     <ClInclude Include="RoleManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="State.h" />
+    <ClInclude Include="Terrain.h" />
     <ClInclude Include="testInclude.h" />
     <ClInclude Include="Typedef.h" />
     <ClInclude Include="World.h" />

@@ -2,6 +2,7 @@
 #include <SFML\Graphics.hpp>
 #include "MenuManager.h"
 #include "Control.h"
+#include "testInclude.h"
 
 buttonMenu::buttonMenu()
 {
@@ -31,9 +32,6 @@ void buttonMenu::update()
 {
 	//graphic
 	Menu::update();
-	if (!_isVisible) {
-		return;
-	}
 	sf::RenderWindow * window = Locator::getWindow();
 	for (int i = 0; i < _buttonNum.x; i++) {
 		for (int j = 0; j < _buttonNum.y; j++) {
@@ -88,10 +86,6 @@ bool buttonMenu::isButtomMoveable(DIRECTION dir)
 	return 1;
 }
 
-#define MAIN_MENU_POSITION_X 0
-#define MAIN_MENU_POSITION_Y 500
-#define MAIN_MENU_HEIGHT 300
-#define MAIN_MENU_WEIGHTH 800
 MainMenu::MainMenu()
 {
 	_buttonNum.x = 2;
@@ -130,44 +124,34 @@ void MainMenu::update()
 
 void MainMenu::handleInput()
 {
-	if (Locator::getMenuManager()->getCurrentMenu() != NULL) {
-		if (Locator::getMenuManager()->getCurrentMenu() == this) {
-			DIRECTION dir = NODIRECTION;
-			if (Locator::getControl()->ifPressedKey(sf::Keyboard::W)) {
-				dir = UP;
-			}
-			if (Locator::getControl()->ifPressedKey(sf::Keyboard::S)) {
-				dir = DOWN;
-			}
-			if (Locator::getControl()->ifPressedKey(sf::Keyboard::A)) {
-				dir = LEFT;
-			}
-			if (Locator::getControl()->ifPressedKey(sf::Keyboard::D)) {
-				dir = RIGHT;
-			}
-			if (Locator::getControl()->ifPressedKey(sf::Keyboard::J)) {
-				_buttonsArr[_buttonIndex.x][_buttonIndex.y]->selected();
-			}
-			if (dir != NODIRECTION) {
-				moveButton(dir);
-			}
-			if (Locator::getControl()->ifPressedKey(sf::Keyboard::K)) {
-				Locator::getMenuManager()->leftMenu();
-			}
+	if (((NormalScene*)Locator::getWorld()->getScene())->getCurrentMenu() == this) {
+		DIRECTION dir = NODIRECTION;
+		if (Locator::getControl()->ifPressedKey(sf::Keyboard::W)) {
+			dir = UP;
 		}
-	}
-	else {
-		if(Locator::getControl()->ifPressedKey(sf::Keyboard::K)){
-			Locator::getMenuManager()->add(this);
+		if (Locator::getControl()->ifPressedKey(sf::Keyboard::S)) {
+			dir = DOWN;
+		}
+		if (Locator::getControl()->ifPressedKey(sf::Keyboard::A)) {
+			dir = LEFT;
+		}
+		if (Locator::getControl()->ifPressedKey(sf::Keyboard::D)) {
+			dir = RIGHT;
+		}
+		if (Locator::getControl()->ifPressedKey(sf::Keyboard::J)) {
+			_buttonsArr[_buttonIndex.x][_buttonIndex.y]->selected();
+		}
+		if (dir != NODIRECTION) {
+			moveButton(dir);
 		}
 	}
 }
 
 void Menu::update()
 {
-	if (_isVisible) {
-		Locator::getWindow()->draw(_framework);
-	}
+
+	Locator::getWindow()->draw(_framework);
+
 }
 
 BattleMainMenu::BattleMainMenu()
@@ -210,7 +194,7 @@ void BattleMainMenu::update()
 
 void BattleMainMenu::handleInput()
 {
-	if (Locator::getMenuManager()->getCurrentMenu() == this) {
+	if (Locator::getWorld()->getScene()->getCurrentMenu() == this) {
 		DIRECTION dir = NODIRECTION;
 		if (Locator::getControl()->ifPressedKey(sf::Keyboard::W)) {
 			dir = UP;
@@ -232,3 +216,4 @@ void BattleMainMenu::handleInput()
 		}
 	}
 }
+

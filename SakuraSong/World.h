@@ -1,13 +1,10 @@
 #pragma once
 #include <SFML\Graphics.hpp>
-#include "MapManager.h"
-#include "MenuManager.h"
-#include "RoleManager.h"
-#include "RenderManager.h"
 #include "GameObject.h"
-#include "Scene.h"
 #include <list>
 using namespace std;
+
+class Scene;
 
 class World
 {
@@ -19,9 +16,12 @@ public:
 	void update();
 	void start();
 	Scene * getScene();
+	void pushScene(Scene * s);
+	Scene* popScene();
 	//void addObject(GameObject * obj);
 	//void removeObject();
 private:
 	//list<GameObject *> _objectList;
-	Scene * _scene;
+
+	list<Scene*> _sceneList;
 };

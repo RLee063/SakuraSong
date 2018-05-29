@@ -11,10 +11,10 @@ public:
 	Role();
 	~Role();
 	sf::Sprite* getSprite();
-	sf::Texture** getMoveTexture();
-	sf::Texture* getattackTexture();
-	sf::Texture* getStandTexture();
-	sf::Texture* getBattleTexture();
+	sf::Texture*** getMoveTexture();
+	sf::Texture** getattackTexture();
+	sf::Texture** getStandTexture();
+	sf::Texture** getBattleTexture();
 	void setDirection(DIRECTION* dir);
 	void setState(RoleState * rs);
 	void addHp(int hp);
@@ -26,14 +26,14 @@ public:
 	void update();
 	//
 protected:
-	sf::Sprite* _mySprite;
+	sf::Sprite _mySprite;
 	sf::Texture* _standTexture;
 	sf::Texture* _battleTexture;
 	sf::Texture** _moveTexture;
 	sf::Texture* _attackTexture;
 	RoleState * _state;
 	DIRECTION _direction;
-
+	sf::Vector2i _position;
 	int _hp;
 	int _attackPower;
 };

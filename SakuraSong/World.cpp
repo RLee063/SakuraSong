@@ -1,12 +1,8 @@
 #include "World.h"
-#include "Locator.h"
-#include <SFML\Graphics.hpp>
-#include "Control.h"
-#include "BattleManager.h"
-#include "Creator.h"
+#include "testInclude.h"
 World::World()
 {
-	Locator::init(new MapManager() , new MenuManager(), new RoleManager(), new RenderManager() , new sf::RenderWindow(sf::VideoMode(MAP_HEIGHT_PIX, MAP_WIDTH_PIX), "SFML works!"), new Control(),this, new BattleManager(), new Creator());
+	Locator::init(new MapManager() , new MenuManager(), new RoleManager(), new RenderManager() , new sf::RenderWindow(sf::VideoMode(WINDOW_HEIGHT, WINDOW_WIDTH), "SakuraSong!"), new Control(),this, new BattleManager(), new Creator());
 }
 
 World::~World()
@@ -26,62 +22,13 @@ void World::worldLoop()
 
 void World::handleInput(int code)
 {
-	DIRECTION dir = NODIRECTION;
-	switch (code)
-	{
-	case sf::Keyboard::W:
-		dir = UP;
-		break;
-	case sf::Keyboard::S:
-		dir = DOWN;
-		break;
-	case sf::Keyboard::A:
-		dir = LEFT;
-		break;
-	case sf::Keyboard::D:
-		dir = RIGHT;
-		break;
-	}
 
-	if (Locator::getMenuManager()->getCurrentMenu() == NULL) {
-		switch (code)
-		{
-		case sf::Keyboard::K:
-			//_expManager->getExeManager()->add(new OpenMainMenu(_expManager));
-			break;
-		default:
-
-			break;
-		}
-		if (dir != NODIRECTION) {
-			Locator::getRoleManager()->getHero()->startMove(&dir);
-		}
-		return ;
-	}
-	else {
-		//switch (code)
-		//{
-	/*	case sf::Keyboard::K:
-			_expManager->getExeManager()->add(new LeftMainMenu(_expManager));
-			return 0;
-			break;
-		default:
-
-			break;
-		}
-		if (dir != NODIRECTION) {
-			if (_expManager->isButtonBoxMoveable(dir)) {
-				_expManager->getExeManager()->add(new ButtonBoxMove(_expManager, dir));
-			}
-		}*/
-		return ;
-	}
 }
 
 void World::update()
 {
-	_scene->update();
 	Locator::getControl()->update();
+	_sceneList.back()->update();
 	//Locator::getMapManager()->update();
 	//Locator::getRoleManager()->update();
 	//Locator::getMenuManager()->update();
@@ -90,13 +37,25 @@ void World::update()
 
 void World::start()
 {
-	_scene = Locator::getCreator()->createMap1Scene();
+	_sceneList.push_back(Locator::getCreator()->createMap1Scene());
 	worldLoop();
 }
 
 Scene * World::getScene()
 {
-	return _scene;
+	return _sceneList.back();
+}
+
+void World::pushScene(Scene * s)
+{
+	_sceneList.push_back(s);
+}
+
+Scene * World::popScene()
+{
+	Scene * s = _sceneList.back();
+	_sceneList.pop_back();
+	return s;
 }
 
 //void World::addObject(GameObject * obj)

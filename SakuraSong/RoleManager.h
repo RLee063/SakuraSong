@@ -5,19 +5,22 @@
 #include "Locator.h"
 using namespace std;
 
+class Role;
+class Enemy;
+
+
 class RoleManager
 {
 public:
 	RoleManager();
 	~RoleManager();
-	Hero * getHero();
+	Role * getHero();
 	Enemy * getEnemy();
 	list<sf::Sprite*> getRenderList();
-	void update();
 	void eraseEnemy();
 	void setEnemy(GameObject * enemy);
 private:
-	Hero * _hero;
+	Role * _hero;
 	GameObject * _enemy;
 };
 

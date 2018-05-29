@@ -11,6 +11,9 @@
 #include "Scene.h"
 #include "Implement.h"
 #include "State.h"
+#include "World.h"
+#include "Creator.h"
+#include "Terrain.h"
 
 #include <iostream>
 #include <fstream>

@@ -2,8 +2,10 @@
 #include "testInclude.h"
 
 
-BackGround::BackGround()
+BackGround::BackGround(char * tPath)
 {
+	_backT.loadFromFile(tPath);
+	_backS.setTexture(_backT);
 }
 
 
@@ -13,16 +15,15 @@ BackGround::~BackGround()
 
 void BackGround::update()
 {
-	
+	Locator::getWindow()->draw(_backS);
 }
 
 MapBackGround::MapBackGround(char * tPath)
+	:BackGround(tPath)
 {
-	_backT.loadFromFile(tPath);
-	_backS.setTexture(_backT);
 }
 
 void MapBackGround::update()
 {
-	Locator::getWindow()->draw(_backS);
+	BackGround::update();
 }

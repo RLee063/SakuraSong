@@ -4,7 +4,7 @@ class GameObject
 public:
 	GameObject();
 	~GameObject();
-	virtual void update() = 0;
+	virtual void update(){};
 	void invisible();
 	void visible();
 protected:

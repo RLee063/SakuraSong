@@ -128,8 +128,11 @@ public:
 	void update();
 	void clear();
 	bool ifPressedKey(int code);
+	void enable();
+	void disable();
 private:
 	KEY_EVENT _keyPressed;
 	KEY_EVENT _keyRleased;
+	bool _isEnable;
 };
 

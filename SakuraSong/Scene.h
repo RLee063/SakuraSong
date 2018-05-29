@@ -4,46 +4,63 @@
 #include "BackGround.h"
 using namespace std;
 
+class Terrain;
+
 class Scene
 {
 public:
 	Scene();
 	~Scene();
-	void pushObj(GameObject * obj);
-	GameObject * popObj();
+	virtual void init() {};
+	virtual void pushMenu(Menu * obj);
+	virtual Menu * popMenu();
 	virtual void update() = 0;
+	virtual Menu* getCurrentMenu();
+	virtual void addCommand(Command * cm);
 protected:
-	list<GameObject *> _menuList;
+	list<Menu *> _menuList;
+	list<Command *> _commandList;
 };
 
 class NormalScene :public Scene {
 public:
-	NormalScene();
+	NormalScene(MapBackGround * backG, char * mapInfoPath, sf::Vector2i* heroPos, Role * hero, Menu * mainMenu);
 	void handleEvent();
 	void update();
-	void init(char * tPath, char * mapInfoPath, sf::Vector2i* heroPos, Hero * hero);
-	MAPINFO** getMapInfo();
+	void init();
+	Terrain*** getMapInfo();
 	sf::Vector2i * getHeroPos();
+	Role* getHero();
+	bool isMenuListEmpty();
+	bool isBlockMoveable(int x, int y);
+
 	//temp functions
 private:
 	int _mapLength;
 	int _mapWidth;
-	MapBackGround * _map;
+	sf::Vector2i _leftUpPoint;
+	MapBackGround * _mapG;
 	sf::Sprite _backS;
 	sf::Texture _backT;
-	MAPINFO ** _mapInfo;
-	GameObject * ** _mapOfObject;
+	Terrain* ** _mapInfo;
+	Role* ** _mapOfObject;
 	//temp vars
 	sf::Vector2i _heroPos;
-	Hero * _hero;
+	Role * _hero;
+	Menu * _mainMenu;
 };
 
 class BattleScene :public Scene {
 public:
-	BattleScene();
+	BattleScene(BackGround *, Menu * mainMenu);
+	void init(Role* hero, Role * enemy);
 	void update();
+	Role* getHero();
+	Role* getEnemy();
 private:
 	Role * _hero;
 	Role * _enemy;
-	list<GameObject *>_menuList;
+	//list<Role*>_enemyList;
+	BackGround * _backG;
+	Menu* _mainMenu;
 };

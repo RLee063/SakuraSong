@@ -17,7 +17,7 @@ public:
 	//---------temp--------
 	void swatchBack();
 private:
-	MAPINFO _map[MAP_HEIGHT][MAP_WIDTH];
+	TERRAIN _mapG[MAP_HEIGHT][MAP_WIDTH];
 	GameObject * _mapO[MAP_HEIGHT][MAP_WIDTH];
 	sf::Vector2i _heroPos;
 	sf::Sprite _backGroundS;

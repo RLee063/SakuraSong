@@ -69,6 +69,12 @@
     <ClCompile Include="Implement.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\todoList.md">
@@ -137,6 +143,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Implement.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -5,7 +5,7 @@
 class BackGround :public GameObject
 {
 public:
-	BackGround();
+	BackGround(char * tPath);
 	~BackGround();
 	void update();
 protected:

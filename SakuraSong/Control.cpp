@@ -4,6 +4,7 @@ using namespace std;
 
 Control::Control()
 {
+	_isEnable = 1;
 }
 
 
@@ -13,6 +14,9 @@ Control::~Control()
 
 void Control::update()
 {
+	if (!_isEnable) {
+		return;
+	}
 	clear();
 	sf::Event event;
 	sf::RenderWindow *window = Locator::getWindow();
@@ -33,4 +37,14 @@ void Control::clear()
 bool Control::ifPressedKey(int code)
 {
 	return *((bool*)&_keyPressed + code);
+}
+
+void Control::enable()
+{
+	_isEnable = 1;
+}
+
+void Control::disable()
+{
+	_isEnable = 0;
 }
