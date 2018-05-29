@@ -11,6 +11,7 @@ public:
 	void hideEnemy(Role * obj);
 	void npcEnter(Role * obj);
 	void npcLeft();
+	void killEnemy();
 	void update();
 	Role* getEnemy();
 protected:

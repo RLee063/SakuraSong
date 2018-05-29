@@ -15,6 +15,14 @@ protected:
 	sf::Texture _frameworkT;
 };
 
+class DialogBox : public Menu {
+public:
+	DialogBox();
+	void update();
+private:
+	int _time;
+};
+
 class buttonMenu : public Menu {
 public:
 	buttonMenu();

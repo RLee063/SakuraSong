@@ -9,8 +9,10 @@
 #include "testInclude.h"
 using namespace std;
 
-Role::Role()
+Role::Role(int hp, int agg)
 {
+	_hp = hp;
+	_attackPower = agg;
 }
 
 Role::~Role()
@@ -71,7 +73,27 @@ int Role::getHp()
 	return _hp;
 }
 
+void Role::attack(Role * obj)
+{
+	this->setState((Locator::getCreator()->createRoleAttackState(this)));
+	obj->injured(this->_attackPower);
+}
+
+void Role::injured(int agg)
+{
+	this->setState((Locator::getCreator()->createRoleInjuredState(this)));
+	this->_hp -= agg;
+	if (_hp < 0) {
+		_isDied = 1;
+	}
+}
+
 void Role::update()
 {
 	_state->update();
+}
+
+bool Role::isDied()
+{
+	return _isDied;
 }

@@ -8,7 +8,7 @@ class RoleState;
 class Role: public GameObject
 {
 public:
-	Role();
+	Role(int hp, int agg);
 	~Role();
 	sf::Sprite* getSprite();
 	sf::Texture*** getMoveTexture();
@@ -21,9 +21,10 @@ public:
 	void addAttackP(int ap);
 	DIRECTION* getDirection();
 	int getHp();
-	void attack(GameObject * obj);
+	void attack(Role * obj);
 	void injured(int agg);
 	void update();
+	bool isDied();
 	//
 protected:
 	sf::Sprite _mySprite;
@@ -36,6 +37,7 @@ protected:
 	sf::Vector2i _position;
 	int _hp;
 	int _attackPower;
+	bool _isDied;
 };
 
 class Hero :public Role

@@ -81,6 +81,7 @@ void NormalScene::handleEvent()
 		Scene * s = Locator::getCreator()->createBattle1Scene();
 		((BattleScene*)s)->init(_hero, _mapInfo[_heroPos.x][_heroPos.y]->getEnemy());
 		Locator::getWorld()->pushScene(s);
+		_mapInfo[_heroPos.x][_heroPos.y]->killEnemy();
 	}
 }
 
@@ -102,7 +103,8 @@ void NormalScene::update()
 
 void NormalScene::init()
 {
-
+	_hero->setState(Locator::getCreator()->createHeroStandState(_hero));
+	_hero->getSprite()->setPosition(sf::Vector2f((float)(_heroPos.x*UNIT_LENGTH), float(_heroPos.y*UNIT_LENGTH)));
 }
 
 Terrain *** NormalScene::getMapInfo()
@@ -149,15 +151,40 @@ void BattleScene::init(Role * hero, Role * enemy)
 
 void BattleScene::update()
 {
-	_backG->update();
-	_hero->update();
-	_enemy->update();
-	_menuList.back()->update();
+	for (list<Command*>::iterator i = _commandList.begin(); i != _commandList.end();) {
+		if ((*i)->excute()) {
+			_commandList.erase(i++);
+		}
+		else {
+			i++;
+		}
+	}
+	handleEvent();
+	if (!_ended) {
+		_backG->update();
+		_hero->update();
+		_enemy->update();
+		_menuList.back()->update();
+	}
 }
 
 Role * BattleScene::getEnemy()
 {
 	return _enemy;
+}
+
+void BattleScene::handleEvent()
+{
+	if (_hero->isDied()) {
+		Locator::getWorld()->popScene();
+		Locator::getWorld()->getScene()->init();
+		_ended = 1;
+	}
+	if (_enemy->isDied()) {
+		Locator::getWorld()->popScene();
+		Locator::getWorld()->getScene()->init();
+		_ended = 1;
+	}
 }
 
 Role * BattleScene::getHero()

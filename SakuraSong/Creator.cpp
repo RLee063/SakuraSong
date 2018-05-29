@@ -35,7 +35,7 @@ Scene * Creator::createBattle1Scene()
 
 Role * Creator::createHero()
 {
-	Role * hero = new Role();
+	Role * hero = new Role(500, 50);
 	string path1 = HERO_TEXTURE_PATH;
 	string type = ".png";
 	//set texture
@@ -67,7 +67,7 @@ Role * Creator::createHero()
 
 Role * Creator::createEnemy()
 {
-	Role * enemy = new Role();
+	Role * enemy = new Role(200, 10);
 	string path1 = HUOLONG_TEXTURE_PATH;
 	string type = ".png";
 	sf::Texture ** bT = enemy->getBattleTexture();

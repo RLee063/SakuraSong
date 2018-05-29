@@ -217,3 +217,14 @@ void BattleMainMenu::handleInput()
 	}
 }
 
+DialogBox::DialogBox()
+{
+	_frameworkT.loadFromFile("D:\\_Windows_saving\\GitHub\\SakuraSong\\SakuraSong\\src\\texture\\mainMenuFramwork.png");
+	_framework.setTexture(_frameworkT);
+	_framework.setPosition(sf::Vector2f(MAIN_MENU_POSITION_X, MAIN_MENU_POSITION_Y));
+}
+
+void DialogBox::update()
+{
+	Menu::update();
+}

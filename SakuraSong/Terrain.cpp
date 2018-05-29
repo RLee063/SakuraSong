@@ -51,6 +51,11 @@ void Terrain::npcLeft()
 	_npc = NULL;
 }
 
+void Terrain::killEnemy()
+{
+	_enemy = NULL;
+}
+
 void Terrain::update()
 {
 	Locator::getWindow()->draw(_mySprite);

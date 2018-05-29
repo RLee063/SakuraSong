@@ -42,10 +42,8 @@ AttackButton::AttackButton()
 
 void AttackButton::selected()
 {
-	Role * hero = ((BattleScene*)Locator::getWorld()->getScene())->getHero();
-	Role * enemy = ((BattleScene*)Locator::getWorld()->getScene())->getEnemy();
-	hero->setState(Locator::getCreator()->createRoleAttackState(hero));
-	enemy->setState(Locator::getCreator()->createRoleInjuredState(enemy));
+
+	Locator::getWorld()->getScene()->addCommand(new HeroAttackCommand());
 }
 
 void AttackButton::update() {

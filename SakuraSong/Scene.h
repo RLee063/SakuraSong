@@ -4,6 +4,7 @@
 #include "BackGround.h"
 using namespace std;
 
+class Command;
 class Terrain;
 
 class Scene
@@ -57,10 +58,12 @@ public:
 	void update();
 	Role* getHero();
 	Role* getEnemy();
+	void handleEvent();
 private:
 	Role * _hero;
 	Role * _enemy;
 	//list<Role*>_enemyList;
 	BackGround * _backG;
 	Menu* _mainMenu;
+	bool _ended;
 };
