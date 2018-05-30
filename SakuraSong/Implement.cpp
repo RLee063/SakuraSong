@@ -4,6 +4,7 @@
 RoleMoveGraphicImplement::RoleMoveGraphicImplement(Role * obj)
 	:RoleGraphicImplement(obj)
 {
+	_time = 0;
 }
 
 void RoleMoveGraphicImplement::update()
@@ -18,26 +19,8 @@ void RoleMoveGraphicImplement::update()
 	_obj->getSprite()->setTexture(tt);
 	_count++;
 	Locator::getWindow()->draw(*_obj->getSprite());
-	if (_count > 3) {
+	if (_count > ROLE_ANIMATION_COUNT - 1) {
 		((NormalScene *)Locator::getWorld()->getScene())->getHero()->setState(Locator::getCreator()->createHeroStandState(_obj));
-		sf::Vector2i* posInMap = ((NormalScene *)Locator::getWorld()->getScene())->getHeroPos();
-		switch (*_obj->getDirection())
-		{
-		case UP:
-			posInMap->y -= 1;
-			break;
-		case DOWN:
-			posInMap->y += 1;
-			break;
-		case LEFT:
-			posInMap->x -= 1;
-			break;
-		case RIGHT:
-			posInMap->x += 1;
-			break;
-		default:
-			break;
-		}
 	}
 }
 
@@ -54,6 +37,7 @@ RolePhysicsImplement::RolePhysicsImplement(Role * obj)
 RoleStandGraphicImplement::RoleStandGraphicImplement(Role * obj)
 	:RoleGraphicImplement(obj)
 {
+
 }
 
 void RoleStandGraphicImplement::update()
@@ -67,6 +51,7 @@ void RoleStandGraphicImplement::update()
 RoleIdlePhysicsIplement::RoleIdlePhysicsIplement(Role * obj)
 	:RolePhysicsImplement(obj)
 {
+
 }
 
 void RoleIdlePhysicsIplement::update()
@@ -81,6 +66,7 @@ RoleHandleImplement::RoleHandleImplement(Role * obj)
 RoleIdleHandleImplement::RoleIdleHandleImplement(Role * obj)
 	:RoleHandleImplement(obj)
 {
+	
 }
 
 void RoleIdleHandleImplement::update()
@@ -90,6 +76,7 @@ void RoleIdleHandleImplement::update()
 RoleMovePhysicsImplement::RoleMovePhysicsImplement(Role * obj)
 	:RolePhysicsImplement(obj)
 {
+	_time = 0;
 	_obj = obj;
 }
 
@@ -117,134 +104,157 @@ void RoleMovePhysicsImplement::update()
 	default:
 		break;
 	}
-}
-
-	RoleStandHandleImplement::RoleStandHandleImplement(Role * obj)
-		:RoleHandleImplement(obj)
-	{
-		_obj = obj;
-	}
-
-	bool RoleStandHandleImplement::isMoveable(DIRECTION * direction)
-	{
-		sf::Vector2i* heroPos = ((NormalScene*)Locator::getWorld()->getScene())->getHeroPos();
-		Terrain *** map = ((NormalScene*)Locator::getWorld()->getScene())->getMapInfo();
-		switch (*direction)
+	_count++;
+	if (_count > ROLE_ANIMATION_COUNT - 1) {
+		sf::Vector2i* posInMap = ((NormalScene *)Locator::getWorld()->getScene())->getHeroPos();
+		switch (*_obj->getDirection())
 		{
 		case UP:
-			if (heroPos->y - 1 < 0 || !map[heroPos->x][heroPos->y -1]->isMoveable()) return 0;
+			posInMap->x -= 1;
 			break;
 		case DOWN:
-			if (heroPos->y + 1 > MAP_HEIGHT - 1 || !map[heroPos->x][heroPos->y + 1]->isMoveable()) return 0;
+			posInMap->x += 1;
 			break;
 		case LEFT:
-			if (heroPos->x - 1 < 0 || !map[heroPos->x-1][heroPos->y]->isMoveable()) return 0;
+			posInMap->y -= 1;
 			break;
 		case RIGHT:
-			if (heroPos->x + 1 > MAP_WIDTH - 1 || !map[heroPos->x][heroPos->y]->isMoveable()) return 0;
+			posInMap->y += 1;
 			break;
 		default:
 			break;
 		}
-		return 1;
 	}
+}
 
-	void RoleStandHandleImplement::update()
+HeroStandHandleImplement::HeroStandHandleImplement(Role * obj)
+	:RoleHandleImplement(obj)
+{
+	_obj = obj;
+	_time = 0;
+}
+
+bool HeroStandHandleImplement::isMoveable(DIRECTION * direction)
+{
+	sf::Vector2i* heroPos = ((NormalScene*)Locator::getWorld()->getScene())->getHeroPos();
+	Terrain *** map = ((NormalScene*)Locator::getWorld()->getScene())->getMapInfo();
+	sf::Vector2i* mapSize = ((NormalScene*)Locator::getWorld()->getScene())->getMapSize();
+	switch (*direction)
 	{
-		if (_time++ < ANIMATION_DELAY) {
-			return;
+	case UP:
+		if (heroPos->x - 1 < 0 || !map[heroPos->x-1][heroPos->y ]->isMoveable()) return 0;
+		break;
+	case DOWN:
+		if (heroPos->x + 1 > mapSize->x - 1 || !map[heroPos->x+1][heroPos->y ]->isMoveable()) return 0;
+		break;
+	case LEFT:
+		if (heroPos->y - 1 < 0 || !map[heroPos->x][heroPos->y-1]->isMoveable()) return 0;
+		break;
+	case RIGHT:
+		if (heroPos->y + 1 > mapSize->y - 1 || !map[heroPos->x][heroPos->y+1]->isMoveable()) return 0;
+		break;
+	default:
+		break;
+	}
+	return 1;
+}
+
+void HeroStandHandleImplement::update()
+{
+	if (((NormalScene*)Locator::getWorld()->getScene())->isMenuListEmpty()) {
+		DIRECTION dir = NODIRECTION;
+		Control * control = Locator::getControl();
+		if (control->ifPressedKey(sf::Keyboard::W)) {
+			dir = UP;
 		}
-		if (((NormalScene*)Locator::getWorld()->getScene())->isMenuListEmpty()) {
-			DIRECTION dir = NODIRECTION;
-			Control * control = Locator::getControl();
-			if (control->ifPressedKey(sf::Keyboard::W)) {
-				dir = UP;
+		if (control->ifPressedKey(sf::Keyboard::S)) {
+			dir = DOWN;
+		}
+		if (control->ifPressedKey(sf::Keyboard::A)) {
+			dir = LEFT;
+		}
+		if (control->ifPressedKey(sf::Keyboard::D)) {
+			dir = RIGHT;
+		}
+		if (dir != NODIRECTION) {
+			_obj->setDirection(&dir);
+			if (isMoveable(&dir)) {
+				_obj->setState(Locator::getCreator()->createRoleMoveState(_obj));
 			}
-			if (control->ifPressedKey(sf::Keyboard::S)) {
-				dir = DOWN;
-			}
-			if (control->ifPressedKey(sf::Keyboard::A)) {
-				dir = LEFT;
-			}
-			if (control->ifPressedKey(sf::Keyboard::D)) {
-				dir = RIGHT;
-			}
-			if (dir != NODIRECTION) {
-				_obj->setDirection(&dir);
-				if (isMoveable(&dir)) {
-					_obj->setState(Locator::getCreator()->createRoleMoveState(_obj));
-				}
-			}
 		}
 	}
+}
 
-	RoleBattleGraphicImplement::RoleBattleGraphicImplement(Role * obj)
-		:RoleGraphicImplement(obj)
-	{
-	}
+RoleBattleGraphicImplement::RoleBattleGraphicImplement(Role * obj)
+	:RoleGraphicImplement(obj)
+{
+	
+}
 
-	void RoleBattleGraphicImplement::update()
-	{
-		sf::Texture ** t = _obj->getBattleTexture();
-		_obj->getSprite()->setTexture((*t)[0]);
-		Locator::getWindow()->draw(*_obj->getSprite());;
-	}
+void RoleBattleGraphicImplement::update()
+{
+	sf::Texture ** t = _obj->getBattleTexture();
+	_obj->getSprite()->setTexture((*t)[0]);
+	Locator::getWindow()->draw(*_obj->getSprite());;
+}
 
-	RoleAttackPhysicsIplement::RoleAttackPhysicsIplement(Role * obj)
-		:RolePhysicsImplement(obj)
-	{
-	}
+RoleAttackPhysicsIplement::RoleAttackPhysicsIplement(Role * obj)
+	:RolePhysicsImplement(obj)
+{
+	_time = 0;
+}
 
-	void RoleAttackPhysicsIplement::update()
-	{
-		if (_time++ % (ANIMATION_DELAY) != 0) {
-			return;
-		}
-		if (_count == 0) {
-			_obj->getSprite()->move(sf::Vector2f(10, 0));
-			_count++;
-			return;
-		}
-		else if(_count == 7){
-			_obj->getSprite()->move(sf::Vector2f(-10, 0));
-			_count++;
-			_obj->setState(Locator::getCreator()->createRoleBattleState(_obj));
-			return;
-		}
-		else if (_count % 2 == 0) {
-			_obj->getSprite()->move(sf::Vector2f(-20, 0));
-			_count++;
-			return;
-		}
-		else {
-			_obj->getSprite()->move(sf::Vector2f(20, 0));
-			_count++;
-			return;
-		}
+void RoleAttackPhysicsIplement::update()
+{
+	if (_time++ % (ANIMATION_DELAY) != 0) {
+		return;
 	}
+	if (_count == 0) {
+		_obj->getSprite()->move(sf::Vector2f(10, 0));
+		_count++;
+		return;
+	}
+	else if(_count == 7){
+		_obj->getSprite()->move(sf::Vector2f(-10, 0));
+		_count++;
+		_obj->setState(Locator::getCreator()->createRoleBattleState(_obj));
+		return;
+	}
+	else if (_count % 2 == 0) {
+		_obj->getSprite()->move(sf::Vector2f(-20, 0));
+		_count++;
+		return;
+	}
+	else {
+		_obj->getSprite()->move(sf::Vector2f(20, 0));
+		_count++;
+		return;
+	}
+}
 
-	RoleInjurePhysicsImplement::RoleInjurePhysicsImplement(Role * obj):
-		RolePhysicsImplement(obj)
-	{
-	}
+RoleInjurePhysicsImplement::RoleInjurePhysicsImplement(Role * obj):
+	RolePhysicsImplement(obj)
+{
+	_time = 0;
+}
 
-	void RoleInjurePhysicsImplement::update()
-	{
-		if (_time++ % (ANIMATION_DELAY) != 0) {
-			return;
-		}
-		if (_count == 7) {
-			_obj->getSprite()->setColor(sf::Color::White);
-			_obj->setState(Locator::getCreator()->createRoleBattleState(_obj));
-			return;
-		}
-		else if (_count % 2 == 0) {
-			_obj->getSprite()->setColor(sf::Color::Red);
-			_count++;
-			return;
-		}
-		else {
-			_obj->getSprite()->setColor(sf::Color::White);
-			return;
-		}
+void RoleInjurePhysicsImplement::update()
+{
+	if (_time++ % (ANIMATION_DELAY) != 0) {
+		return;
 	}
+	if (_count == 7) {
+		_obj->getSprite()->setColor(sf::Color::White);
+		_obj->setState(Locator::getCreator()->createRoleBattleState(_obj));
+		return;
+	}
+	else if (_count % 2 == 0) {
+		_obj->getSprite()->setColor(sf::Color::Red);
+		_count++;
+		return;
+	}
+	else {
+		_obj->getSprite()->setColor(sf::Color::White);
+		return;
+	}
+}

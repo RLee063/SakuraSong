@@ -28,3 +28,12 @@ public:
 private:
 	int _time;
 };
+
+class dialogButton :public Button {
+public:
+	dialogButton();
+	void selected();
+	void update();
+private:
+
+};

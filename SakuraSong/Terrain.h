@@ -8,12 +8,14 @@ public:
 	~Terrain();
 	bool isMoveable();
 	bool isHided();
+	bool hasNpc();
 	void hideEnemy(Role * obj);
 	void npcEnter(Role * obj);
 	void npcLeft();
 	void killEnemy();
 	void update();
 	Role* getEnemy();
+	Role* getNpc();
 protected:
 	bool _isMoveable;
 	Role * _enemy;

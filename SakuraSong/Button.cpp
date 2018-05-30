@@ -49,3 +49,50 @@ void AttackButton::selected()
 void AttackButton::update() {
 	Button::update();
 }
+
+dialogButton::dialogButton()
+{
+	_myTexture.loadFromFile("D:\\_Windows_saving\\GitHub\\SakuraSong\\SakuraSong\\src\\texture\\mainButtons00.png");
+	_mySprite.setTexture(_myTexture);
+}
+
+void dialogButton::selected()
+{
+	sf::Vector2i* heroPos = ((NormalScene *)Locator::getWorld()->getScene())->getHeroPos();
+	Terrain *** map = ((NormalScene *)Locator::getWorld()->getScene())->getMapInfo();
+	DIRECTION * dir = ((NormalScene *)Locator::getWorld()->getScene())->getHero()->getDirection();
+	Role * npc = NULL;
+
+	switch (*dir)
+	{
+	case UP:
+		npc = map[heroPos->x-1][heroPos->y]->getNpc();
+		break;
+	case DOWN:
+		npc = map[heroPos->x+1][heroPos->y]->getNpc();
+		break;
+	case LEFT:
+		npc = map[heroPos->x][heroPos->y-1]->getNpc();
+		break;
+	case RIGHT:
+		npc = map[heroPos->x][heroPos->y+1]->getNpc();
+		break;
+	default:
+		break;
+	}
+	if (npc != NULL) {
+		list<Menu *> dL = npc->getDialogList();
+		for (auto i : dL) {
+			((NormalScene *)Locator::getWorld()->getScene())->pushMenu(i);
+		}
+	}
+	else {
+		((NormalScene *)Locator::getWorld()->getScene())->pushMenu(new DialogBox(500, 0));
+	}
+}
+
+void dialogButton::update()
+{
+	Button::update();
+}
+

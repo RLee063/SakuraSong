@@ -20,6 +20,7 @@ public:
 	RoleState * createRoleBattleState(Role * obj);
 	RoleState * createRoleAttackState(Role * obj);
 	RoleState * createRoleInjuredState(Role * obj);
+	RoleState * createRoleStandState(Role * obj);
 private:
 	Scene * _map1Scene;
 	Scene * _battle1Scene;

@@ -16,9 +16,9 @@ public:
 	void update();
 };
 
-class RoleStandHandleImplement :public RoleHandleImplement {
+class HeroStandHandleImplement :public RoleHandleImplement {
 public:
-	RoleStandHandleImplement(Role * obj);
+	HeroStandHandleImplement(Role * obj);
 	void update();
 private:
 	bool isMoveable(DIRECTION * dir);

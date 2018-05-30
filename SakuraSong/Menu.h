@@ -17,10 +17,13 @@ protected:
 
 class DialogBox : public Menu {
 public:
-	DialogBox();
+	DialogBox(int sleep, bool passAble);
+	void handleInput();
 	void update();
 private:
 	int _time;
+	int _sleep;
+	bool _passAble;
 };
 
 class buttonMenu : public Menu {

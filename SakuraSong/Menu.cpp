@@ -100,7 +100,7 @@ MainMenu::MainMenu()
 	_framework.setPosition(sf::Vector2f(MAIN_MENU_POSITION_X, MAIN_MENU_POSITION_Y));
 	for (int i = 0; i < _buttonNum.x; i++) {
 		for (int j = 0; j < _buttonNum.y; j++) {
-			_buttonsArr[i][j] = new MainMenuButton(i, j);
+			_buttonsArr[i][j] = new dialogButton();
 			_buttonsArr[i][j]->getSprite()->setPosition((float)
 			MAIN_MENU_POSITION_X + 50 + (j*((MAIN_MENU_WEIGHTH - 150)/_buttonNum.x)),
 				(float)
@@ -140,6 +140,9 @@ void MainMenu::handleInput()
 		}
 		if (Locator::getControl()->ifPressedKey(sf::Keyboard::J)) {
 			_buttonsArr[_buttonIndex.x][_buttonIndex.y]->selected();
+		}
+		if (Locator::getControl()->ifPressedKey(sf::Keyboard::K)) {
+			Locator::getWorld()->getScene()->popMenu();
 		}
 		if (dir != NODIRECTION) {
 			moveButton(dir);
@@ -210,6 +213,7 @@ void BattleMainMenu::handleInput()
 		}
 		if (Locator::getControl()->ifPressedKey(sf::Keyboard::J)) {
 			_buttonsArr[_buttonIndex.x][_buttonIndex.y]->selected();
+			Locator::getControl()->clearKey(sf::Keyboard::J);
 		}
 		if (dir != NODIRECTION) {
 			moveButton(dir);
@@ -217,14 +221,32 @@ void BattleMainMenu::handleInput()
 	}
 }
 
-DialogBox::DialogBox()
+DialogBox::DialogBox(int sleep, bool passAble)
 {
 	_frameworkT.loadFromFile("D:\\_Windows_saving\\GitHub\\SakuraSong\\SakuraSong\\src\\texture\\mainMenuFramwork.png");
 	_framework.setTexture(_frameworkT);
 	_framework.setPosition(sf::Vector2f(MAIN_MENU_POSITION_X, MAIN_MENU_POSITION_Y));
+	_sleep = sleep;
+	_time = 0;
+	_passAble = passAble;
+}
+
+void DialogBox::handleInput()
+{
+	if (_passAble && Locator::getControl()->ifPressedKey(sf::Keyboard::J)) {
+		Locator::getWorld()->getScene()->popMenu();
+		Locator::getControl()->clearKey(sf::Keyboard::J);
+		_time = 0;
+	}
+	else if (_time++ > _sleep) {
+		Locator::getWorld()->getScene()->popMenu();
+		Locator::getControl()->clearKey(sf::Keyboard::J);
+		_time = 0;
+	}
 }
 
 void DialogBox::update()
 {
+	handleInput();
 	Menu::update();
 }

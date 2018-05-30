@@ -1,7 +1,8 @@
 #pragma once
-
+#include "Includes.h"
 class Role;
 class BattleScene;
+class NormalScene;
 class Command
 {
 public:
@@ -22,3 +23,12 @@ private:
 	BattleScene * _scene;
 };
 
+class ViewMoveCommand :public Command {
+public:
+	ViewMoveCommand( NormalScene * s);
+	bool excute();
+private:
+	int _count;
+	sf::RenderWindow * _window;
+	NormalScene * _scene;
+};

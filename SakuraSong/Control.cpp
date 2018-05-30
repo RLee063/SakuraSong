@@ -39,6 +39,12 @@ bool Control::ifPressedKey(int code)
 	return *((bool*)&_keyPressed + code);
 }
 
+void Control::clearKey(int code)
+{
+	char * des = (char*)&_keyPressed;
+	*(des + code) = 0;
+}
+
 void Control::enable()
 {
 	_isEnable = 1;

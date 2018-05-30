@@ -53,6 +53,12 @@ void Role::setState(RoleState * rs)
 	_state = rs;
 }
 
+void Role::setPosition(sf::Vector2i pos)
+{
+	_position = pos;
+	_mySprite.setPosition(sf::Vector2f(float(UNIT_LENGTH*pos.y), (float)UNIT_LENGTH*pos.x));
+}
+
 void Role::addHp(int hp)
 {
 	_hp += hp;
@@ -61,6 +67,16 @@ void Role::addHp(int hp)
 void Role::addAttackP(int ap)
 {
 	_attackPower += ap;
+}
+
+void Role::pushDialog(Menu*m)
+{
+	_dialogList.push_back(m);
+}
+
+list<Menu*> Role::getDialogList()
+{
+	return _dialogList;
 }
 
 DIRECTION * Role::getDirection()

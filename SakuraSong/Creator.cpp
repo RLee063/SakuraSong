@@ -70,11 +70,32 @@ Role * Creator::createEnemy()
 	Role * enemy = new Role(200, 10);
 	string path1 = HUOLONG_TEXTURE_PATH;
 	string type = ".png";
+	//texture
+	sf::Texture *** mvT = enemy->getMoveTexture();
+	*mvT = new sf::Texture *[4];
+	for (int i = 0; i < 4; i++) {
+		(*mvT)[i] = new sf::Texture[4];
+	}
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			(*mvT)[i][j].loadFromFile(path1 + "move" + to_string(i) + to_string(j) + type);
+		}
+	}
+	sf::Texture ** sT = enemy->getStandTexture();
+	*sT = new sf::Texture[4];
+	for (int i = 0; i < 4; i++) {
+		(*sT)[i].loadFromFile(path1 + "stand" + to_string(i) + type);
+	}
 	sf::Texture ** bT = enemy->getBattleTexture();
 	*bT = new sf::Texture;
+	//state
 	(*(*bT)).loadFromFile(path1 + "battle" + type);
-	RoleState * state = createRoleBattleState(enemy);
+	RoleState * state = createRoleStandState(enemy);
 	enemy->setState(state);
+	DIRECTION dir = DOWN;
+	enemy->setDirection(&dir);
+	//dialogBox
+	enemy->pushDialog(new DialogBox(5000, 1));
 	return enemy;
 }
 
@@ -107,7 +128,7 @@ Terrain * Creator::createTerrain(TERRAIN terType, int x, int y)
 RoleState * Creator::createHeroStandState(Role * obj)
 {
 	RoleState * state = new RoleState(obj);
-	state->init(new RoleStandGraphicImplement(obj), new RoleIdlePhysicsIplement(obj), new RoleStandHandleImplement(obj));
+	state->init(new RoleStandGraphicImplement(obj), new RoleIdlePhysicsIplement(obj), new HeroStandHandleImplement(obj));
 	return state;
 }
 
@@ -136,5 +157,12 @@ RoleState * Creator::createRoleInjuredState(Role * obj)
 {
 	RoleState * state = new RoleState(obj);
 	state->init(new RoleBattleGraphicImplement(obj), new RoleInjurePhysicsImplement(obj), new RoleIdleHandleImplement(obj));
+	return state;
+}
+
+RoleState * Creator::createRoleStandState(Role * obj)
+{
+	RoleState * state = new RoleState(obj);
+	state->init(new RoleStandGraphicImplement(obj), new RoleIdlePhysicsIplement(obj), new RoleIdleHandleImplement(obj));
 	return state;
 }

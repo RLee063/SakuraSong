@@ -4,7 +4,7 @@
 #include "GameObject.h"
 
 class RoleState;
-
+class Menu;
 class Role: public GameObject
 {
 public:
@@ -17,8 +17,11 @@ public:
 	sf::Texture** getBattleTexture();
 	void setDirection(DIRECTION* dir);
 	void setState(RoleState * rs);
+	void setPosition(sf::Vector2i pos);
 	void addHp(int hp);
 	void addAttackP(int ap);
+	void pushDialog(Menu* m);
+	list<Menu*> getDialogList();
 	DIRECTION* getDirection();
 	int getHp();
 	void attack(Role * obj);
@@ -38,6 +41,7 @@ protected:
 	int _hp;
 	int _attackPower;
 	bool _isDied;
+	list<Menu*> _dialogList;
 };
 
 class Hero :public Role

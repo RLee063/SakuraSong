@@ -128,6 +128,7 @@ public:
 	void update();
 	void clear();
 	bool ifPressedKey(int code);
+	void clearKey(int code);
 	void enable();
 	void disable();
 private:

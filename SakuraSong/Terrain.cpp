@@ -6,7 +6,7 @@ Terrain::Terrain(bool isMab, sf::Texture * t, int x, int y)
 {
 	_isMoveable = isMab;
 	_mySprite.setTexture(*t);
-	_mySprite.setPosition(sf::Vector2f((float)x, (float)y));
+	_mySprite.setPosition(sf::Vector2f((float)y, (float)x));
 }
 
 Terrain::~Terrain()
@@ -36,6 +36,16 @@ bool Terrain::isHided()
 	}
 }
 
+bool Terrain::hasNpc()
+{
+	if (_npc != NULL) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+
 void Terrain::hideEnemy(Role * obj)
 {
 	_enemy = obj;
@@ -59,9 +69,17 @@ void Terrain::killEnemy()
 void Terrain::update()
 {
 	Locator::getWindow()->draw(_mySprite);
+	if (_npc != NULL) {
+		_npc->update();
+	}
 }
 
 Role * Terrain::getEnemy()
 {
 	return _enemy;
+}
+
+Role * Terrain::getNpc()
+{
+	return _npc;
 }

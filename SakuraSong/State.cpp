@@ -17,8 +17,8 @@ RoleState::RoleState(Role * obj)
 
 void RoleState::update()
 {
-	_graphicIm->update();
 	_physicsIm->update();
+	_graphicIm->update();
 	_handleIm->update();
 }
 

@@ -31,14 +31,17 @@ public:
 	void init();
 	Terrain*** getMapInfo();
 	sf::Vector2i * getHeroPos();
+	sf::Vector2i * getMapSize();
+	sf::Vector2i * getLeftUpPoint();
 	Role* getHero();
 	bool isMenuListEmpty();
-	bool isBlockMoveable(int x, int y);
-
+	sf::View* getView();
+	//	bool isBlockMoveable(int x, int y);
 	//temp functions
 private:
-	int _mapLength;
-	int _mapWidth;
+	bool _isViewMoveable();
+
+	sf::Vector2i _mapSize;
 	sf::Vector2i _leftUpPoint;
 	MapBackGround * _mapG;
 	sf::Sprite _backS;
@@ -49,6 +52,11 @@ private:
 	sf::Vector2i _heroPos;
 	Role * _hero;
 	Menu * _mainMenu;
+	sf::View _view;
+	DIRECTION _viewDirection;
+	bool _isViewMoving;
+
+	friend class ViewMoveCommand;
 };
 
 class BattleScene :public Scene {
