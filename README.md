@@ -12,6 +12,6 @@
 
 ## НиЭМ
 
-![1](markDownPic\\readme1.png)
-![1](markDownPic\\readme2.png)
-![1](markDownPic\\readme3.png)
+![1](https://github.com/RLee063/SakuraSong/blob/master/markDownPic/readme1.png?raw=true)
+![1](https://github.com/RLee063/SakuraSong/blob/master/markDownPic/readme2.png?raw=true)
+![1](https://github.com/RLee063/SakuraSong/blob/master/markDownPic/readme3.png?raw=true)
