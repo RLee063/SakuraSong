@@ -18,19 +18,7 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="MapManager.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Menu.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuManager.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderManager.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="RoleManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Locator.cpp">
@@ -52,9 +40,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="State.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="BattleManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
@@ -83,24 +68,15 @@
     <None Include="..\README.md">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="config\map1">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MapManager.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Menu.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="MenuManager.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Includes.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderManager.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="RoleManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Locator.h">
@@ -122,12 +98,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="State.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="testInclude.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="BattleManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">

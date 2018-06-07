@@ -1,16 +1,11 @@
-#include "Role.h"
 #include <iostream>
 #include <string>
-#include "Role.h"
-#include "Locator.h"
-#include "MapManager.h"
-#include "MenuManager.h"
-#include "Control.h"
-#include "testInclude.h"
+#include "Includes.h"
 using namespace std;
 
-Role::Role(int hp, int agg)
+Role::Role(int hp, int agg, ROLETYPE type)
 {
+	_type = type;
 	_hp = hp;
 	_attackPower = agg;
 }
@@ -43,6 +38,16 @@ sf::Texture ** Role::getBattleTexture()
 	return &_battleTexture;
 }
 
+sf::Texture ** Role::getBeBattledTexture()
+{
+	return &_beBattledTexture;
+}
+
+sf::Texture ** Role::getInBattleTexture()
+{
+	return &_inBattleTexture;
+}
+
 void Role::setDirection(DIRECTION * dir)
 {
 	_direction = *dir;
@@ -57,6 +62,11 @@ void Role::setPosition(sf::Vector2i pos)
 {
 	_position = pos;
 	_mySprite.setPosition(sf::Vector2f(float(UNIT_LENGTH*pos.y), (float)UNIT_LENGTH*pos.x));
+}
+
+void Role::setTalkState(bool isTalking)
+{
+	_isTalking = isTalking;
 }
 
 void Role::addHp(int hp)
@@ -84,9 +94,19 @@ DIRECTION * Role::getDirection()
 	return &_direction;
 }
 
+ROLETYPE Role::getType()
+{
+	return _type;
+}
+
 int Role::getHp()
 {
 	return _hp;
+}
+
+sf::Vector2i * Role::getPosition()
+{
+	return &_position;
 }
 
 void Role::attack(Role * obj)
@@ -112,4 +132,19 @@ void Role::update()
 bool Role::isDied()
 {
 	return _isDied;
+}
+
+bool Role::isTalking()
+{
+	return _isTalking;
+}
+
+void Role::setInBattleTexture(bool isFriend)
+{
+	if (isFriend) {
+		_inBattleTexture = _battleTexture;
+	}
+	else {
+		_inBattleTexture = _beBattledTexture;
+	}
 }

@@ -22,13 +22,3 @@ private:
 	Role * _enemy;
 	BattleScene * _scene;
 };
-
-class ViewMoveCommand :public Command {
-public:
-	ViewMoveCommand( NormalScene * s);
-	bool excute();
-private:
-	int _count;
-	sf::RenderWindow * _window;
-	NormalScene * _scene;
-};

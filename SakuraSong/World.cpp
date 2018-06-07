@@ -1,8 +1,8 @@
 #include "World.h"
-#include "testInclude.h"
+#include "Includes.h"
 World::World()
 {
-	Locator::init(new MapManager() , new MenuManager(), new RoleManager(), new RenderManager() , new sf::RenderWindow(sf::VideoMode(WINDOW_HEIGHT, WINDOW_WIDTH), "SakuraSong!"), new Control(),this, new BattleManager(), new Creator());
+	Locator::init(new sf::RenderWindow(sf::VideoMode(WINDOW_HEIGHT_PIX, WINDOW_WIDTH_PIX), "SakuraSong!"), new Control(),this, new Creator());
 }
 
 World::~World()

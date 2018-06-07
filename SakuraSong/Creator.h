@@ -1,5 +1,7 @@
 #pragma once
-#include "Includes.h"
+//#includ "Includes.h"
+#include "SFML\Graphics.hpp"
+#include "Typedef.h"
 class Scene;
 class Role;
 class RoleState;
@@ -13,7 +15,7 @@ public:
 	Scene * createMap1Scene();
 	Scene * createBattle1Scene();
 	Role * createHero();
-	Role * createEnemy();
+	Role * createRole(ROLE rType);
 	Terrain * createTerrain(TERRAIN terType, int x, int y);
 	RoleState * createHeroStandState(Role * obj);
 	RoleState * createRoleMoveState(Role * obj);
@@ -21,8 +23,8 @@ public:
 	RoleState * createRoleAttackState(Role * obj);
 	RoleState * createRoleInjuredState(Role * obj);
 	RoleState * createRoleStandState(Role * obj);
+	RoleState * createNpcStandState(Role * obj);
+	sf::Sprite * createBuild(BUILD buildType);
 private:
 	Scene * _map1Scene;
-	Scene * _battle1Scene;
 };
-

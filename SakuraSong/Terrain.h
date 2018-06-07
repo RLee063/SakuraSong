@@ -14,6 +14,9 @@ public:
 	void npcLeft();
 	void killEnemy();
 	void update();
+	void update2();
+	void setBuild(sf::Sprite * s, bool moveable);
+	void setMoveable(bool is);
 	Role* getEnemy();
 	Role* getNpc();
 protected:
@@ -21,4 +24,5 @@ protected:
 	Role * _enemy;
 	Role * _npc;
 	sf::Sprite _mySprite;
+	sf::Sprite * _build;
 };

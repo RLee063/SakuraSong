@@ -1,5 +1,5 @@
 #include "Implement.h"
-#include "testInclude.h"
+#include "Includes.h"
 
 RoleMoveGraphicImplement::RoleMoveGraphicImplement(Role * obj)
 	:RoleGraphicImplement(obj)
@@ -10,17 +10,25 @@ RoleMoveGraphicImplement::RoleMoveGraphicImplement(Role * obj)
 void RoleMoveGraphicImplement::update()
 {
 	if (_time++ % ANIMATION_DELAY != 0) {
-		sf::Texture tt = (*_obj->getMoveTexture())[*_obj->getDirection()][_count];
-		_obj->getSprite()->setTexture(tt);
+		sf::Texture*** tt = (_obj->getMoveTexture());
+		sf::Texture * ttt = &(*tt)[*_obj->getDirection()][_count];
+		_obj->getSprite()->setTexture(*ttt);
 		Locator::getWindow()->draw(*_obj->getSprite());
 		return;
 	}
-	sf::Texture tt = (*_obj->getMoveTexture())[*_obj->getDirection()][_count];
-	_obj->getSprite()->setTexture(tt);
+	sf::Texture*** tt = (_obj->getMoveTexture());
+	sf::Texture * ttt = &(*tt)[*_obj->getDirection()][_count];
+	_obj->getSprite()->setTexture(*ttt);
 	_count++;
 	Locator::getWindow()->draw(*_obj->getSprite());
 	if (_count > ROLE_ANIMATION_COUNT - 1) {
-		((NormalScene *)Locator::getWorld()->getScene())->getHero()->setState(Locator::getCreator()->createHeroStandState(_obj));
+		if (_obj->getType() == HERO)
+		{
+			_obj->setState(Locator::getCreator()->createHeroStandState(_obj));
+		}
+		else {
+			_obj->setState(Locator::getCreator()->createNpcStandState(_obj));
+		}
 	}
 }
 
@@ -90,39 +98,41 @@ void RoleMovePhysicsImplement::update()
 	switch (*dir)
 	{
 	case UP:
-		sp->move(sf::Vector2f(0, -WALK_LENGTH / 4));
+		sp->move(sf::Vector2f(0, -UNIT_LENGTH / 4));
 		break;
 	case DOWN:
-		sp->move(sf::Vector2f(0, WALK_LENGTH / 4));
+		sp->move(sf::Vector2f(0, UNIT_LENGTH / 4));
 		break;
 	case LEFT:
-		sp->move(sf::Vector2f(-WALK_LENGTH / 4, 0));
+		sp->move(sf::Vector2f(-UNIT_LENGTH / 4, 0));
 		break;
 	case RIGHT:
-		sp->move(sf::Vector2f(WALK_LENGTH / 4, 0));
+		sp->move(sf::Vector2f(UNIT_LENGTH / 4, 0));
 		break;
 	default:
 		break;
 	}
 	_count++;
 	if (_count > ROLE_ANIMATION_COUNT - 1) {
-		sf::Vector2i* posInMap = ((NormalScene *)Locator::getWorld()->getScene())->getHeroPos();
-		switch (*_obj->getDirection())
-		{
-		case UP:
-			posInMap->x -= 1;
-			break;
-		case DOWN:
-			posInMap->x += 1;
-			break;
-		case LEFT:
-			posInMap->y -= 1;
-			break;
-		case RIGHT:
-			posInMap->y += 1;
-			break;
-		default:
-			break;
+		if (_obj->getType() == HERO) {
+			sf::Vector2i* posInMap = ((NormalScene *)Locator::getWorld()->getScene())->getHeroPos();
+			switch (*_obj->getDirection())
+			{
+			case UP:
+				posInMap->x -= 1;
+				break;
+			case DOWN:
+				posInMap->x += 1;
+				break;
+			case LEFT:
+				posInMap->y -= 1;
+				break;
+			case RIGHT:
+				posInMap->y += 1;
+				break;
+			default:
+				break;
+			}
 		}
 	}
 }
@@ -179,6 +189,32 @@ void HeroStandHandleImplement::update()
 		if (dir != NODIRECTION) {
 			_obj->setDirection(&dir);
 			if (isMoveable(&dir)) {
+				NormalScene * scene = ((NormalScene*)Locator::getWorld()->getScene());
+				sf::Vector2i* pos = _obj->getPosition();
+				switch (dir)
+				{
+				case UP:
+					scene->npcEnter(pos->x - 1, pos->y, _obj);
+					scene->npcLeft(pos->x, pos->y);
+					pos->x -= 1;
+					break;
+				case DOWN:
+					scene->npcEnter(pos->x + 1, pos->y, _obj);
+					scene->npcLeft(pos->x, pos->y);
+					pos->x += 1;
+					break;
+				case LEFT:
+					scene->npcEnter(pos->x, pos->y - 1, _obj);
+					scene->npcLeft(pos->x, pos->y);
+					pos->y -= 1;
+					break;
+				case RIGHT:
+					scene->npcEnter(pos->x, pos->y + 1, _obj);
+					scene->npcLeft(pos->x, pos->y);
+					pos->y += 1;
+				default:
+					break;
+				}
 				_obj->setState(Locator::getCreator()->createRoleMoveState(_obj));
 			}
 		}
@@ -193,7 +229,7 @@ RoleBattleGraphicImplement::RoleBattleGraphicImplement(Role * obj)
 
 void RoleBattleGraphicImplement::update()
 {
-	sf::Texture ** t = _obj->getBattleTexture();
+	sf::Texture ** t = _obj->getInBattleTexture();
 	_obj->getSprite()->setTexture((*t)[0]);
 	Locator::getWindow()->draw(*_obj->getSprite());;
 }
@@ -256,5 +292,74 @@ void RoleInjurePhysicsImplement::update()
 	else {
 		_obj->getSprite()->setColor(sf::Color::White);
 		return;
+	}
+}
+
+NpcStandHandleimplement::NpcStandHandleimplement(Role * obj)
+	:RoleHandleImplement(obj)
+{
+
+}
+
+void NpcStandHandleimplement::update()
+{
+	if (rand() % (NPC_MOVE_DELAY_RAND - 1 + 1) + 1 != 5) {
+		return;
+	}
+	else if (_obj->isTalking()) {
+		return;
+	}
+	else {
+		DIRECTION dir = (DIRECTION)(rand() % 4);
+		NormalScene * scene = ((NormalScene*)Locator::getWorld()->getScene());
+		sf::Vector2i* pos = _obj->getPosition();
+		switch (dir)
+		{
+		case UP:
+			if (scene->isBlockMoveable(pos->x - 1, pos->y)) {
+				scene->npcEnter(pos->x - 1, pos->y, _obj);
+				scene->npcLeft(pos->x, pos->y);
+				pos->x -= 1;
+			}
+			else {
+				return;
+			}
+			break;
+		case DOWN:
+			if (scene->isBlockMoveable(pos->x + 1, pos->y)) {
+				scene->npcEnter(pos->x + 1, pos->y, _obj);
+				scene->npcLeft(pos->x, pos->y);
+				pos->x += 1;
+			}
+			else {
+				return;
+			}
+			break;
+		case LEFT:
+			if (scene->isBlockMoveable(pos->x , pos->y-1)) {
+				scene->npcEnter(pos->x, pos->y-1, _obj);
+				scene->npcLeft(pos->x, pos->y);
+				pos->y -= 1;
+			}
+			else {
+				return;
+			}
+			break;
+		case RIGHT:
+			if (scene->isBlockMoveable(pos->x, pos->y+1)) {
+				scene->npcEnter(pos->x, pos->y+1, _obj);
+				scene->npcLeft(pos->x, pos->y);
+				pos->y += 1;
+			}
+			else {
+				return;
+			}
+			break;
+		default:
+			break;
+		}
+
+		_obj->setDirection(&dir);
+		_obj->setState(Locator::getCreator()->createRoleMoveState(_obj));
 	}
 }

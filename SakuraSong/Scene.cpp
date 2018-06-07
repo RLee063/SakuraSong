@@ -1,7 +1,5 @@
 #include "Scene.h"
-#include "testInclude.h"
 #include "Includes.h"
-#include "Typedef.h"
 Scene::Scene()
 {
 }
@@ -32,7 +30,7 @@ void Scene::addCommand(Command * cm)
 	_commandList.push_back(cm);
 }
 
-NormalScene::NormalScene(MapBackGround * backG, char * mapInfoPath, sf::Vector2i* heroPos, Role * hero, Menu * mainMenu)
+NormalScene::NormalScene(char * mapInfoPath, sf::Vector2i* heroPos, Role * hero, Menu * mainMenu)
 {
 	ifstream fi;
 	fi.open(mapInfoPath);
@@ -50,23 +48,37 @@ NormalScene::NormalScene(MapBackGround * backG, char * mapInfoPath, sf::Vector2i
 			_mapInfo[i][j] = Locator::getCreator()->createTerrain((TERRAIN)terrainType, i, j);
 		}
 	}
-	_mapG = backG;
+
+	int buildType;
+	bool moveable;
+	for (int i = 0; i < _mapSize.x; i++) {
+		for (int j = 0; j < _mapSize.y; j++) {
+			fi >> buildType;
+			if (buildType == NOBUILD) {
+				continue;
+			}
+			else if (buildType < 100) {
+				moveable = 0;
+			}
+			else {
+				moveable = 1;
+			}
+			_mapInfo[i][j]->setBuild(Locator::getCreator()->createBuild((BUILD)buildType), moveable);
+		}
+	}
+
 	_heroPos = *heroPos;
 	_hero = hero;
 	_mainMenu = mainMenu;
-	_view = Locator::getWindow()->getView();
-	_viewDirection = NODIRECTION;
-	_isViewMoving = 0;
-	hero->setPosition(sf::Vector2i(6, 6));
-	_mapInfo[4][4]->hideEnemy(Locator::getCreator()->createEnemy());
-	Role * npc1 = Locator::getCreator()->createEnemy();
-	npc1->setPosition(sf::Vector2i(5, 7));
-	_mapInfo[5][7]->npcEnter(npc1);
+	_originView = Locator::getWindow()->getView();
+	_view = _originView;
+	hero->setPosition(_heroPos);
+	_menuList.push_back(new GuideMenu());
 }
 
 void NormalScene::handleEvent()
 {
-	if (_menuList.size() == 0&& Locator::getControl()->ifPressedKey(sf::Keyboard::K)) {
+	if (_menuList.size() == 0 && Locator::getControl()->ifPressedKey(sf::Keyboard::K)) {
 		pushMenu(_mainMenu);
 		Locator::getControl()->clearKey(sf::Keyboard::K);
 	}
@@ -75,31 +87,14 @@ void NormalScene::handleEvent()
 		((BattleScene*)s)->init(_hero, _mapInfo[_heroPos.x][_heroPos.y]->getEnemy());
 		Locator::getWorld()->pushScene(s);
 		_mapInfo[_heroPos.x][_heroPos.y]->killEnemy();
+		Locator::getWindow()->setView(_originView);
 	}
 	Control * control = Locator::getControl();
-	if (!_isViewMoving) {
-		if (control->ifPressedKey(sf::Keyboard::W)) {
-			_viewDirection = UP;
-		}
-		if (control->ifPressedKey(sf::Keyboard::S)) {
-			_viewDirection = DOWN;
-		}
-		if (control->ifPressedKey(sf::Keyboard::A)) {
-			_viewDirection = LEFT;
-		}
-		if (control->ifPressedKey(sf::Keyboard::D)) {
-			_viewDirection = RIGHT;
-		}
-		if (_viewDirection != NODIRECTION && _isViewMoveable()) {
-			_commandList.push_back(new ViewMoveCommand(this));
-			_isViewMoving = 1;
-		}
-	}
 }
 
 void NormalScene::update()
 {
-	handleEvent();
+	_updateView();
 	//_mapG->update();
 	for (list<Command*>::iterator i = _commandList.begin(); i != _commandList.end();) {
 		if ((*i)->excute()) {
@@ -109,27 +104,41 @@ void NormalScene::update()
 			i++;
 		}
 	}
-	Locator::getWindow()->setView(_view);
-	for (int i = 0; i < MAP_HEIGHT; i++) {
-		for (int j = 0; j < MAP_WIDTH; j++) {
+	for (int i = _heroPos.x - (WINDOW_HEIGHT / 2) - 1; i < _heroPos.x + (WINDOW_HEIGHT / 2) + 1; i++) {
+		for (int j = _heroPos.y - (WINDOW_HEIGHT / 2) - 1; j < _heroPos.y + (WINDOW_HEIGHT / 2) + 1; j++) {
 			_mapInfo[i][j]->update();
 		}
 	}
-	_hero->update();
+
+	for (int i = _heroPos.x - (WINDOW_HEIGHT / 2) - 1; i < _heroPos.x + (WINDOW_HEIGHT / 2) + 1; i++) {
+		for (int j = _heroPos.y - (WINDOW_HEIGHT / 2) - 1; j < _heroPos.y + (WINDOW_HEIGHT / 2) + 1; j++) {
+			_mapInfo[i][j]->update2();
+		}
+	}
+	//_hero->update();
 	if (!_menuList.empty()) {
+		_menuList.back()->setPosition(_hero->getSprite()->getPosition());
 		_menuList.back()->update();
 	}
+	handleEvent();
 }
 
 void NormalScene::init()
 {
 	_hero->setState(Locator::getCreator()->createHeroStandState(_hero));
-	_hero->getSprite()->setPosition(sf::Vector2f((float)(_heroPos.x*UNIT_LENGTH), float(_heroPos.y*UNIT_LENGTH)));
+	_hero->getSprite()->setPosition(sf::Vector2f((float)(_heroPos.y*UNIT_LENGTH), float(_heroPos.x*UNIT_LENGTH)));
+	/////
+	Locator::getWindow()->draw(*_hero->getSprite());
 }
 
 Terrain *** NormalScene::getMapInfo()
 {
 	return _mapInfo;
+}
+
+Terrain * NormalScene::getTerrain(int x, int y)
+{
+	return _mapInfo[x][y];
 }
 
 sf::Vector2i * NormalScene::getHeroPos()
@@ -147,6 +156,11 @@ sf::Vector2i * NormalScene::getLeftUpPoint()
 	return &_leftUpPoint;
 }
 
+sf::View * NormalScene::getOriginView()
+{
+	return &_originView;
+}
+
 Role * NormalScene::getHero()
 {
 	return _hero;
@@ -162,14 +176,52 @@ bool NormalScene::isMenuListEmpty()
 	}
 }
 
+bool NormalScene::isBlockMoveable(int x, int y)
+{
+	if (x < 0 || y < 0 || x >= _mapSize.x || y >= _mapSize.y) {
+		return 0;
+	}
+	else {
+		return _mapInfo[x][y]->isMoveable();
+	}
+}
+
 sf::View * NormalScene::getView()
 {
 	return &_view;
 }
 
-bool NormalScene::_isViewMoveable()
+void NormalScene::npcEnter(int x, int y, Role * role)
 {
-	return 1;
+	_mapInfo[x][y]->npcEnter(role);
+}
+
+void NormalScene::npcLeft(int x, int y)
+{
+	_mapInfo[x][y]->npcLeft();
+}
+
+void NormalScene::setHeroPos(sf::Vector2i p)
+{
+	_heroPos = p;
+	_hero->setPosition(p);
+}
+
+void NormalScene::setEnemyPos(sf::Vector2i p)
+{
+	_enemyPos = p;
+}
+
+sf::Vector2i * NormalScene::getEnemyPos()
+{
+	return &_enemyPos;
+}
+
+void NormalScene::_updateView()
+{
+	sf::Vector2f heroPosPix = _hero->getSprite()->getPosition();
+	_view.setCenter(heroPosPix);
+	Locator::getWindow()->setView(_view);
 }
 
 BattleScene::BattleScene(BackGround * backG, Menu * mainMenu)
@@ -183,10 +235,12 @@ void BattleScene::init(Role * hero, Role * enemy)
 {
 	_hero = hero;
 	_enemy = enemy;
-	_hero->setState(Locator::getCreator()->createRoleBattleState(_hero)); 
+	hero->setInBattleTexture(1);
+	enemy->setInBattleTexture(0);
+	_hero->setState(Locator::getCreator()->createRoleBattleState(_hero));
 	_enemy->setState(Locator::getCreator()->createRoleBattleState(_enemy));
-	_hero->getSprite()->setPosition(sf::Vector2f(((WINDOW_HEIGHT) / 5), (WINDOW_WIDTH) * 2 / 5));
-	_enemy->getSprite()->setPosition(sf::Vector2f(((WINDOW_HEIGHT) * 3/ 5), (WINDOW_WIDTH) * 2 / 5));
+	_hero->getSprite()->setPosition(sf::Vector2f(((WINDOW_HEIGHT_PIX) / 5), (WINDOW_WIDTH_PIX) * 2 / 5));
+	_enemy->getSprite()->setPosition(sf::Vector2f(((WINDOW_HEIGHT_PIX) * 3 / 5), (WINDOW_WIDTH_PIX) * 2 / 5));
 }
 
 void BattleScene::update()
@@ -217,13 +271,40 @@ void BattleScene::handleEvent()
 {
 	if (_hero->isDied()) {
 		Locator::getWorld()->popScene();
-		Locator::getWorld()->getScene()->init();
-		_ended = 1;
 	}
-	if (_enemy->isDied()) {
+	else if (_enemy->isDied()) {
 		Locator::getWorld()->popScene();
-		Locator::getWorld()->getScene()->init();
-		_ended = 1;
+		NormalScene * ns = ((NormalScene *)Locator::getWorld()->getScene());
+		sf::Vector2i ep = *ns->getEnemyPos();
+		Terrain*** map = ns->getMapInfo();
+		map[ep.x][ep.y]->npcLeft();
+		map[ep.x][ep.y]->killEnemy();
+	}
+	else {
+		return;
+	}
+
+	Locator::getWorld()->getScene()->init();
+	_ended = 1;
+
+	ROLETYPE rt = _enemy->getType();
+	sf::Vector2i ep = *((NormalScene*)Locator::getWorld()->getScene())->getEnemyPos();
+	switch (rt)
+	{
+	case MOVENPC:
+		_enemy->setState(Locator::getCreator()->createNpcStandState(_enemy));
+		swap(ep.x, ep.y);
+		_enemy->getSprite()->setPosition((sf::Vector2f)(ep * UNIT_LENGTH));
+		break;
+	case ENEMY:
+		break;
+	case STOPNPC:
+		_enemy->setState(Locator::getCreator()->createRoleStandState(_enemy));
+		swap(ep.x, ep.y);
+		_enemy->getSprite()->setPosition((sf::Vector2f)(ep * UNIT_LENGTH));
+		break;
+	default:
+		break;
 	}
 }
 

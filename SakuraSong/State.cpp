@@ -1,5 +1,5 @@
 #include "State.h"
-#include "testInclude.h"
+#include "Includes.h"
 
 State::State()
 {
@@ -17,8 +17,8 @@ RoleState::RoleState(Role * obj)
 
 void RoleState::update()
 {
-	_physicsIm->update();
 	_graphicIm->update();
+	_physicsIm->update();
 	_handleIm->update();
 }
 

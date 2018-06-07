@@ -152,7 +152,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BattleManager.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Control.cpp" />
@@ -162,12 +161,8 @@
     <ClCompile Include="Locator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="BackGround.cpp" />
-    <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="Menu.cpp" />
-    <ClCompile Include="MenuManager.cpp" />
-    <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="Role.cpp" />
-    <ClCompile Include="RoleManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="Terrain.cpp" />
@@ -176,9 +171,9 @@
   <ItemGroup>
     <None Include="..\README.md" />
     <None Include="..\todoList.md" />
+    <None Include="config\map1" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BattleManager.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Control.h" />
@@ -188,16 +183,11 @@
     <ClInclude Include="Includes.h" />
     <ClInclude Include="Locator.h" />
     <ClInclude Include="BackGround.h" />
-    <ClInclude Include="MapManager.h" />
     <ClInclude Include="Menu.h" />
-    <ClInclude Include="MenuManager.h" />
-    <ClInclude Include="RenderManager.h" />
     <ClInclude Include="Role.h" />
-    <ClInclude Include="RoleManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="Terrain.h" />
-    <ClInclude Include="testInclude.h" />
     <ClInclude Include="Typedef.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>

@@ -1,15 +1,18 @@
 #pragma once
-#include "Includes.h"
+#include "Typedef.h"
 #include <list>
 #include "GameObject.h"
 #include "Locator.h"
 #include "Button.h"
-
 using namespace std;
+
+class Role;
+
 class Menu : public GameObject
 {
 public:
 	virtual void update();
+	virtual void setPosition(sf::Vector2f pos);
 protected:
 	sf::Sprite _framework;
 	sf::Texture _frameworkT;
@@ -17,13 +20,17 @@ protected:
 
 class DialogBox : public Menu {
 public:
-	DialogBox(int sleep, bool passAble);
+	DialogBox(int sleep, bool passAble, char * dialog, Role * who);
+	virtual void setPosition(sf::Vector2f pos);
 	void handleInput();
 	void update();
 private:
 	int _time;
 	int _sleep;
 	bool _passAble;
+	Role * _who;
+	sf::Text _dialog;
+	sf::Font _font;
 };
 
 class buttonMenu : public Menu {
@@ -35,8 +42,10 @@ public:
 	sf::Sprite* getButtonBoxS();
 	Button*** getButtonArr();
 	virtual void update();
+	virtual void setPosition(sf::Vector2f hp);
 	virtual void moveButton(DIRECTION dir);
 	virtual bool isButtomMoveable(DIRECTION dir);
+	virtual void handleInput();
 protected:
 	sf::Vector2i _buttonNum;
 	sf::Vector2i _buttonIndex;
@@ -45,13 +54,11 @@ protected:
 	sf::Texture _selectedBoxT;
 };
 
-
 class MainMenu :public buttonMenu{
 public:
 	MainMenu();
 	void update();
 private:
-	void handleInput();
 };
 
 class BattleMainMenu : public buttonMenu {
@@ -59,5 +66,12 @@ public:
 	BattleMainMenu();
 	void update();
 private:
-	void handleInput();
+};
+
+class GuideMenu :public buttonMenu {
+public:
+	GuideMenu();
+	void update();
+private:
+
 };

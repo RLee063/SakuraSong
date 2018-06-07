@@ -1,5 +1,5 @@
 #include "BackGround.h"
-#include "testInclude.h"
+#include "Includes.h"
 
 
 BackGround::BackGround(char * tPath)
@@ -16,14 +16,4 @@ BackGround::~BackGround()
 void BackGround::update()
 {
 	Locator::getWindow()->draw(_backS);
-}
-
-MapBackGround::MapBackGround(char * tPath)
-	:BackGround(tPath)
-{
-}
-
-void MapBackGround::update()
-{
-	BackGround::update();
 }

@@ -12,9 +12,3 @@ protected:
 	sf::Texture _backT;
 	sf::Sprite _backS;
 };
-
-class MapBackGround :public BackGround {
-public:
-	MapBackGround(char * tPath);
-	void update();
-};

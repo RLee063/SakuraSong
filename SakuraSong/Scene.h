@@ -1,11 +1,16 @@
 #pragma once
-#include "testInclude.h"
+#include "SFML\Graphics.hpp"
+#include "Typedef.h"
 #include <list>
-#include "BackGround.h"
+
 using namespace std;
 
+class MapBackGround;
+class BackGround;
 class Command;
 class Terrain;
+class Menu;
+class Role;
 
 class Scene
 {
@@ -25,38 +30,36 @@ protected:
 
 class NormalScene :public Scene {
 public:
-	NormalScene(MapBackGround * backG, char * mapInfoPath, sf::Vector2i* heroPos, Role * hero, Menu * mainMenu);
+	NormalScene(char * mapInfoPath, sf::Vector2i* heroPos, Role * hero, Menu * mainMenu);
 	void handleEvent();
 	void update();
 	void init();
 	Terrain*** getMapInfo();
+	Terrain* getTerrain(int x, int y);
 	sf::Vector2i * getHeroPos();
 	sf::Vector2i * getMapSize();
 	sf::Vector2i * getLeftUpPoint();
+	sf::View * getOriginView();
 	Role* getHero();
 	bool isMenuListEmpty();
+	bool isBlockMoveable(int x, int y);
 	sf::View* getView();
-	//	bool isBlockMoveable(int x, int y);
-	//temp functions
+	void npcEnter(int x, int y, Role * role);
+	void npcLeft(int x, int y);
+	void setHeroPos(sf::Vector2i p);
+	void setEnemyPos(sf::Vector2i p);
+	sf::Vector2i * getEnemyPos();
 private:
-	bool _isViewMoveable();
-
+	void _updateView();
 	sf::Vector2i _mapSize;
 	sf::Vector2i _leftUpPoint;
-	MapBackGround * _mapG;
-	sf::Sprite _backS;
-	sf::Texture _backT;
 	Terrain* ** _mapInfo;
-	Role* ** _mapOfObject;
-	//temp vars
 	sf::Vector2i _heroPos;
+	sf::Vector2i _enemyPos;
 	Role * _hero;
 	Menu * _mainMenu;
 	sf::View _view;
-	DIRECTION _viewDirection;
-	bool _isViewMoving;
-
-	friend class ViewMoveCommand;
+	sf::View _originView;
 };
 
 class BattleScene :public Scene {

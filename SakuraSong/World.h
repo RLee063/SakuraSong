@@ -21,7 +21,5 @@ public:
 	//void addObject(GameObject * obj);
 	//void removeObject();
 private:
-	//list<GameObject *> _objectList;
-
 	list<Scene*> _sceneList;
 };

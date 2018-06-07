@@ -1,8 +1,6 @@
 #include "Menu.h"
 #include <SFML\Graphics.hpp>
-#include "MenuManager.h"
-#include "Control.h"
-#include "testInclude.h"
+#include "Includes.h"
 
 buttonMenu::buttonMenu()
 {
@@ -35,10 +33,22 @@ void buttonMenu::update()
 	sf::RenderWindow * window = Locator::getWindow();
 	for (int i = 0; i < _buttonNum.x; i++) {
 		for (int j = 0; j < _buttonNum.y; j++) {
-			window->draw(*_buttonsArr[i][j]->getSprite());
+			(_buttonsArr[i][j]->update());
 		}
 	}
 	window->draw(_selectedBox);
+}
+void buttonMenu::setPosition(sf::Vector2f hp)
+{
+	Menu::setPosition(hp);
+	hp.x -= WINDOW_WIDTH / 2 * UNIT_LENGTH - 10;
+	hp.y += WINDOW_HEIGHT / 4 * UNIT_LENGTH - 60;
+	for (int i = 0; i < _buttonNum.x; i++) {
+		for (int j = 0; j < _buttonNum.y; j++) {
+			_buttonsArr[i][j]->updatePos(hp);
+		}
+	}
+	_selectedBox.setPosition(_buttonsArr[_buttonIndex.x][_buttonIndex.y]->getSprite()->getPosition());
 }
 void buttonMenu::moveButton(DIRECTION dir)
 {
@@ -86,45 +96,9 @@ bool buttonMenu::isButtomMoveable(DIRECTION dir)
 	return 1;
 }
 
-MainMenu::MainMenu()
+void buttonMenu::handleInput()
 {
-	_buttonNum.x = 2;
-	_buttonNum.y = 2;
-	_buttonsArr = new Button **[_buttonNum.x];
-	for (int i = 0; i < _buttonNum.x; i++) {
-		_buttonsArr[i] = new Button *[_buttonNum.y];
-	}
-
-	_frameworkT.loadFromFile("D:\\_Windows_saving\\GitHub\\SakuraSong\\SakuraSong\\src\\texture\\mainMenuFramwork.png");
-	_framework.setTexture(_frameworkT);
-	_framework.setPosition(sf::Vector2f(MAIN_MENU_POSITION_X, MAIN_MENU_POSITION_Y));
-	for (int i = 0; i < _buttonNum.x; i++) {
-		for (int j = 0; j < _buttonNum.y; j++) {
-			_buttonsArr[i][j] = new dialogButton();
-			_buttonsArr[i][j]->getSprite()->setPosition((float)
-			MAIN_MENU_POSITION_X + 50 + (j*((MAIN_MENU_WEIGHTH - 150)/_buttonNum.x)),
-				(float)
-				MAIN_MENU_POSITION_Y + 20 + (i*((MAIN_MENU_HEIGHT - 60) / _buttonNum.y))
-			);
-		}
-	}
-	_selectedBoxT.loadFromFile("D:\\_Windows_saving\\GitHub\\SakuraSong\\SakuraSong\\src\\texture\\mainButtonSelected.png");
-	_selectedBox.setTexture(_selectedBoxT);
-	_selectedBox.setPosition(_buttonsArr[0][0]->getSprite()->getPosition());
-	_buttonIndex.x = 0;
-	_buttonIndex.y = 0;
-}
-
-void MainMenu::update()
-{
-	handleInput();
-	//graphic
-	buttonMenu::update();
-}
-
-void MainMenu::handleInput()
-{
-	if (((NormalScene*)Locator::getWorld()->getScene())->getCurrentMenu() == this) {
+	if ((Locator::getWorld()->getScene())->getCurrentMenu() == this) {
 		DIRECTION dir = NODIRECTION;
 		if (Locator::getControl()->ifPressedKey(sf::Keyboard::W)) {
 			dir = UP;
@@ -143,6 +117,7 @@ void MainMenu::handleInput()
 		}
 		if (Locator::getControl()->ifPressedKey(sf::Keyboard::K)) {
 			Locator::getWorld()->getScene()->popMenu();
+			Locator::getControl()->clearKey(sf::Keyboard::K);
 		}
 		if (dir != NODIRECTION) {
 			moveButton(dir);
@@ -150,11 +125,58 @@ void MainMenu::handleInput()
 	}
 }
 
+MainMenu::MainMenu()
+{
+	_buttonNum.x = 2;
+	_buttonNum.y = 2;
+	_buttonsArr = new Button **[_buttonNum.x];
+	for (int i = 0; i < _buttonNum.x; i++) {
+		_buttonsArr[i] = new Button *[_buttonNum.y];
+	}
+
+	_frameworkT.loadFromFile(MENU1_FRAME_TEXTURE_PATH);
+	_framework.setTexture(_frameworkT);
+
+	_buttonsArr[0][0] = new DialogButton(50, 25);
+	_buttonsArr[0][1] = new QuitButton(530, 25);
+	_buttonsArr[1][0] = new SaveButton(50, 150);
+	_buttonsArr[1][1] = new BattleButton(530, 150);
+
+	//for (int i = 0; i < _buttonNum.x; i++) {
+	//	for (int j = 0; j < _buttonNum.y; j++) {
+	//		_buttonsArr[i][j] = new DialogButton();
+	//		_buttonsArr[i][j]->getSprite()->setPosition((float)
+	//		MAIN_MENU_POSITION_X + 50 + (j*((MAIN_MENU_WEIGHTH - 150)/_buttonNum.x)),
+	//			(float)
+	//			MAIN_MENU_POSITION_Y + 20 + (i*((MAIN_MENU_HEIGHT - 60) / _buttonNum.y))
+	//		);	
+	//	}
+	//}
+	_selectedBoxT.loadFromFile(BUTTON1_SELECTED_TEXTURE_PATH);
+	_selectedBox.setTexture(_selectedBoxT);
+	_selectedBox.setPosition(_buttonsArr[0][0]->getSprite()->getPosition());
+	_buttonIndex.x = 0;
+	_buttonIndex.y = 0;
+}
+
+void MainMenu::update()
+{
+	handleInput();
+	//graphic
+	buttonMenu::update();
+}
+
+
 void Menu::update()
 {
-
 	Locator::getWindow()->draw(_framework);
+}
 
+void Menu::setPosition(sf::Vector2f pos)
+{
+	pos.x -= WINDOW_WIDTH / 2 * UNIT_LENGTH - 10;
+	pos.y += WINDOW_HEIGHT / 4 * UNIT_LENGTH - 60;
+	_framework.setPosition(pos);
 }
 
 BattleMainMenu::BattleMainMenu()
@@ -166,22 +188,26 @@ BattleMainMenu::BattleMainMenu()
 		_buttonsArr[i] = new Button *[_buttonNum.y];
 	}
 
-	_frameworkT.loadFromFile("D:\\_Windows_saving\\GitHub\\SakuraSong\\SakuraSong\\src\\texture\\mainMenuFramwork.png");
+	_frameworkT.loadFromFile(MENU1_FRAME_TEXTURE_PATH);
 	_framework.setTexture(_frameworkT);
 	_framework.setPosition(sf::Vector2f(MAIN_MENU_POSITION_X, MAIN_MENU_POSITION_Y));
-	for (int i = 0; i < _buttonNum.x; i++) {
-		for (int j = 0; j < _buttonNum.y; j++) {
-			_buttonsArr[i][j] = new MainMenuButton(i, j);
-			_buttonsArr[i][j]->getSprite()->setPosition((float)
-				MAIN_MENU_POSITION_X + 50 + (j*((MAIN_MENU_WEIGHTH - 150) / _buttonNum.x)),
-				(float)
-				MAIN_MENU_POSITION_Y + 20 + (i*((MAIN_MENU_HEIGHT - 60) / _buttonNum.y))
-			);
-		}
-	}
-	_buttonsArr[0][0] = new AttackButton();
-	_buttonsArr[0][0]->getSprite()->setPosition(MAIN_MENU_POSITION_X + 50, MAIN_MENU_POSITION_Y + 20);
-	_selectedBoxT.loadFromFile("D:\\_Windows_saving\\GitHub\\SakuraSong\\SakuraSong\\src\\texture\\mainButtonSelected.png");
+	//for (int i = 0; i < _buttonNum.x; i++) {
+	//	for (int j = 0; j < _buttonNum.y; j++) {
+	//		_buttonsArr[i][j] = new MainMenuButton(i, j);
+	//		_buttonsArr[i][j]->getSprite()->setPosition((float)
+	//			MAIN_MENU_POSITION_X + 50 + (j*((MAIN_MENU_WEIGHTH - 150) / _buttonNum.x)),
+	//			(float)
+	//			MAIN_MENU_POSITION_Y + 20 + (i*((MAIN_MENU_HEIGHT - 60) / _buttonNum.y))
+	//		);
+	//	}
+	//}
+	_buttonsArr[0][0] = new AttackButton(50, 25);
+	_buttonsArr[0][1] = new AttackButton(530, 25);
+	_buttonsArr[1][0] = new AttackButton(50, 150);
+	_buttonsArr[1][1] = new AttackButton(530, 150);
+
+
+	_selectedBoxT.loadFromFile(BUTTON1_SELECTED_TEXTURE_PATH);
 	_selectedBox.setTexture(_selectedBoxT);
 	_selectedBox.setPosition(_buttonsArr[0][0]->getSprite()->getPosition());
 	_buttonIndex.x = 0;
@@ -195,53 +221,44 @@ void BattleMainMenu::update()
 	buttonMenu::update();
 }
 
-void BattleMainMenu::handleInput()
-{
-	if (Locator::getWorld()->getScene()->getCurrentMenu() == this) {
-		DIRECTION dir = NODIRECTION;
-		if (Locator::getControl()->ifPressedKey(sf::Keyboard::W)) {
-			dir = UP;
-		}
-		if (Locator::getControl()->ifPressedKey(sf::Keyboard::S)) {
-			dir = DOWN;
-		}
-		if (Locator::getControl()->ifPressedKey(sf::Keyboard::A)) {
-			dir = LEFT;
-		}
-		if (Locator::getControl()->ifPressedKey(sf::Keyboard::D)) {
-			dir = RIGHT;
-		}
-		if (Locator::getControl()->ifPressedKey(sf::Keyboard::J)) {
-			_buttonsArr[_buttonIndex.x][_buttonIndex.y]->selected();
-			Locator::getControl()->clearKey(sf::Keyboard::J);
-		}
-		if (dir != NODIRECTION) {
-			moveButton(dir);
-		}
-	}
-}
 
-DialogBox::DialogBox(int sleep, bool passAble)
+DialogBox::DialogBox(int sleep, bool passAble, char * dialog, Role* who)
 {
-	_frameworkT.loadFromFile("D:\\_Windows_saving\\GitHub\\SakuraSong\\SakuraSong\\src\\texture\\mainMenuFramwork.png");
+	_frameworkT.loadFromFile(MENU2_FRAME_TEXTURE_PATH);
 	_framework.setTexture(_frameworkT);
 	_framework.setPosition(sf::Vector2f(MAIN_MENU_POSITION_X, MAIN_MENU_POSITION_Y));
 	_sleep = sleep;
 	_time = 0;
 	_passAble = passAble;
+	_font.loadFromFile(FONT1_PATH);
+	_dialog.setFont(_font);
+	_dialog.setString(dialog);
+	_dialog.setPosition(sf::Vector2f(MAIN_MENU_POSITION_X + 50, MAIN_MENU_POSITION_Y + 50));
+	_who = who;
+}
+
+void DialogBox::setPosition(sf::Vector2f pos)
+{
+	Menu::setPosition(pos);
+	pos.x -= WINDOW_WIDTH / 2 * UNIT_LENGTH - 10 - 50;
+	pos.y += WINDOW_HEIGHT / 4 * UNIT_LENGTH - 60 + 50;
+	_dialog.setPosition(pos);
 }
 
 void DialogBox::handleInput()
 {
 	if (_passAble && Locator::getControl()->ifPressedKey(sf::Keyboard::J)) {
-		Locator::getWorld()->getScene()->popMenu();
 		Locator::getControl()->clearKey(sf::Keyboard::J);
-		_time = 0;
 	}
 	else if (_time++ > _sleep) {
-		Locator::getWorld()->getScene()->popMenu();
-		Locator::getControl()->clearKey(sf::Keyboard::J);
-		_time = 0;
+	}
+	else {
+		return;
+	}
+	Locator::getWorld()->getScene()->popMenu();
+	_time = 0;
+	if (_who != NULL) {
+		_who->setTalkState(0);
 	}
 }
 
@@ -249,4 +266,32 @@ void DialogBox::update()
 {
 	handleInput();
 	Menu::update();
+	Locator::getWindow()->draw(_dialog);
+}
+
+GuideMenu::GuideMenu()
+{
+	_buttonNum.x = 1;
+	_buttonNum.y = 2;
+	_buttonsArr = new Button **[_buttonNum.x];
+	for (int i = 0; i < _buttonNum.x; i++) {
+		_buttonsArr[i] = new Button *[_buttonNum.y];
+	}
+	_frameworkT.loadFromFile(MENU1_FRAME_TEXTURE_PATH);
+	_framework.setTexture(_frameworkT);
+	_buttonsArr[0][0] = new ContinueButton(50, 25);
+	_buttonsArr[0][1] = new RestartButton(530, 25);
+
+	_selectedBoxT.loadFromFile(BUTTON1_SELECTED_TEXTURE_PATH);
+	_selectedBox.setTexture(_selectedBoxT);
+	_selectedBox.setPosition(_buttonsArr[0][0]->getSprite()->getPosition());
+	_buttonIndex.x = 0;
+	_buttonIndex.y = 0;
+}
+
+void GuideMenu::update()
+{
+	handleInput();
+	//graphic
+	buttonMenu::update();
 }

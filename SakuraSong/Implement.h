@@ -24,6 +24,15 @@ private:
 	bool isMoveable(DIRECTION * dir);
 	int _time;
 };
+
+class NpcStandHandleimplement :public
+	RoleHandleImplement {
+public:
+	NpcStandHandleimplement(Role * obj);
+	void update();
+private:
+
+};
 ///////////////////////////////////////////////
 class RoleGraphicImplement {
 public:
